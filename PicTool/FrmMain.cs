@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,52 +16,6 @@ namespace PicTool
 {
     public partial class FrmMain : Form
     {
-        #region 多语言支持
-        //多语言支持项目来自 https://github.com/LorisYounger/Multi-Language-Support
-        //语言项目
-        public List<Lang> Langs = new List<Lang>();
-
-        /// <summary>
-        /// 该Form的翻译方法
-        /// </summary>
-        /// <param name="lang">语言</param>
-        private void Translate(Lang lang)
-        {
-            lang.Translate(this);
-            //手动添加进行修改 例如 menu
-            foreach (Line line in lang.FindLangForm(this).FindGroupLine("menu"))
-                foreach (var tmp in menuStrip.Items.Find(line.Info, true))
-                {
-                    tmp.Text = line.Text;
-                }
-            foreach (Line line in lang.FindLangForm(this).FindGroupLine(".ToolTip"))
-            {
-                foreach (var tmp in this.Controls.Find(line.Info.Split('.')[0], true))
-                {
-                    toolTip1.SetToolTip(tmp, line.Text);
-                }
-            }
-            foreach (TabPage tp in tabControlToolChose.TabPages)
-            {
-                var tmps = lang.FindLangForm(this).FindGroupLine("Header");
-                var tmp = tmps.Find(x => x.Info == tp.Name);
-                if (tmp != null)
-                    tp.Text = tmp.Text;
-            }
-
-            //版本号加上
-            this.Text += " - ver " + Program.Version;
-        }
-
-        public Lang lang;
-        public void LangClick(object sender, EventArgs e)
-        {
-            ToolStripMenuItem mi = (ToolStripMenuItem)sender;
-            Setting.FindorAddLine("Lang").Info = mi.Text;
-            var lang = Langs.Find(x => x.Language == mi.Text);
-            Translate(lang);
-        }
-        #endregion
 
         /// <summary>
         /// 软件设置
@@ -83,30 +36,7 @@ namespace PicTool
         {
             File.WriteAllText(Application.StartupPath + @"\Setting.lpt", Setting.ToString());
         }
-        /// <summary>
-        /// 兼容用的多线程模块
-        /// </summary>
-        /// <param name="ocpd"></param>
-        public void ComPatible(object ocpd)
-        {
-            ComPatData cpd = (ComPatData)ocpd;
-            for (; cpd.x < cpd.xp; cpd.x++)
-            {
-                for (int y = 0; y < cpd.img.Height; y++)
-                {
-                    cpd.img.SetPixel(cpd.x, y, CompatibleColor(cpd.img.GetPixel(cpd.x, y), cpd.Colors));
-                }
-            }
-            log($"[{cpd.id}]" + lang.Translate("线程已经完成"));
-        }
-        public struct ComPatData
-        {
-            public List<Color> Colors;
-            public Bitmap img;
-            public int x;
-            public int xp;
-            public int id;
-        }
+
         public FrmMain()
         {
             InitializeComponent();
@@ -114,8 +44,8 @@ namespace PicTool
             pictureBoxWait.Dock = DockStyle.Fill;//等待窗口填充满
             hideprocessbartimer = new System.Timers.Timer()
             {
-                AutoReset =false,
-                Interval = 3000,                
+                AutoReset = false,
+                Interval = 2000,
             };
             hideprocessbartimer.Elapsed += Hideprocessbartimer_Elapsed;
 
@@ -206,172 +136,6 @@ namespace PicTool
 
         }
 
-
-        /// <summary>
-        /// 打开图片
-        /// </summary>
-        private void OpenImage()
-        {
-            OpenFileDialog ofd = new OpenFileDialog()
-            {
-                Filter = lang.Translate("全部可用图片(*.jpg;*.jpge;*.png;*.bmp;*.ptraw)|*.jpg;*.jpge;*.png;*.bmp;*.ptraw|全部文件(*.*)|*.*"),
-            };
-            if (ofd.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-            if (ofd.FileName.ToLower().EndsWith(".ptraw"))
-            {
-                //PTraw 新格式
-                //其实就是txt文本,里面的全是图片颜色值
-
-                //TODO
-
-                sChooseImage = true;
-                return;
-            }
-            try
-            {
-                pictureBoxBefore.Image = Image.FromFile(ofd.FileName);
-            }
-            catch
-            {
-                MessageBox.Show(lang.Translate("文件已损坏"));
-                return;
-            }
-            sChooseImage = true;
-        }
-        /// <summary>
-        /// 保存图片
-        /// </summary>
-        private void SaveImage()
-        {
-            if (!sProducesResult)
-            {
-                MessageBox.Show(lang.Translate("请先在加工图片后再导出"));
-                return;
-            }
-            SaveFileDialog sfd = new SaveFileDialog()
-            {
-                Filter = lang.Translate("便携式网络图形(*.png)|*.png|联合图像专家组(*.jpg;*.jpge)|*.jpg;*.jpge|图形交换格式(*.gif)|*.gif|纯文本源数据(*.ptraw)|*.ptraw"),
-            };
-            if (sfd.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-            if (sfd.FileName.ToLower().EndsWith(".ptraw"))
-            {
-                //PTraw 新格式
-                //其实就是txt文本,里面的全是图片颜色值
-
-                //TODO
-
-                return;
-            }
-            pictureBoxAfter.Image.Save(sfd.FileName);
-        }
-        /// <summary>
-        /// 打印日志
-        /// </summary>
-        /// <param name="logtext">日志文本</param>
-        private void log(string logtext)
-        {
-            textBoxConsole.AppendText("\r\n" + logtext);
-            textBoxConsole.SelectionStart = textBoxConsole.Text.Length;
-            Log.AppendLine(logtext);
-        }
-
-        private void Waiting(bool wait)
-        {
-            UseWaitCursor = wait;
-            pictureBoxWait.Visible = wait;
-            splitContainer1.Visible = !wait;
-            if (wait)
-            {
-                progressBarWait.Value = 0;
-                progressBarWait.Maximum = 100;
-                progressBarWait.Visible = true;
-            }
-            else
-            {
-                hideprocessbartimer.Start();
-                progressBarWait.Value = progressBarWait.Maximum;
-            }
-        }
-
-
-
-        /// <summary>
-        /// 颜色兼容操作
-        /// </summary>
-        private void CMBStart()
-        {
-            log(lang.Translate("\r\n--正在进行图片兼容--\r\n"));
-
-
-            List<Color> Colors = new List<Color>();
-            try
-            {
-                foreach (string str in textBoxCMBColor.Text.Trim(';').Split(';'))
-                {
-                    Colors.Add(HEXToColor(str));
-                }
-            }
-            catch
-            {
-                MessageBox.Show(lang.Translate("请检查兼容颜色框文本框中的输入有误,请检查"));
-            }
-
-            log(lang.Translate("读取图片集完成,共计[0]个颜色\r\n", Colors.Count.ToString()));
-
-            if (Colors.Count < 2)
-            {
-                Waiting(false);
-                MessageBox.Show(lang.Translate("颜色不足2个,无法进行兼容计算,任务失败"));
-                return;
-            }
-            progressBarWait.Value = 10;
-            //开始干活
-
-            Bitmap img = new Bitmap(pictureBoxBefore.Image);
-            Bitmap[] imgs = new Bitmap[7];//多线程操作
-            Thread[] threads = new Thread[7];
-            int xb = img.Width / 8;
-            for (int s = 0; s < 7; s++)
-            {
-                threads[s] = new Thread(new ParameterizedThreadStart(ComPatible));
-                imgs[s] = new Bitmap(img);
-                threads[s].Start(new ComPatData()
-                {
-                    id = s,
-                    x = s * xb,
-                    xp = (s + 1) * xb,
-                    Colors = Colors,
-                    img = imgs[s]
-                });
-            }
-            for (int x = xb * 7; x < img.Width; x++)
-            {
-                for (int y = 0; y < img.Height; y++)
-                {
-                    img.SetPixel(x, y, CompatibleColor(img.GetPixel(x, y), Colors));
-                }
-            }
-            progressBarWait.Value = 80;
-            Graphics g1 = Graphics.FromImage(img);
-
-            for (int s = 0; s < 7; s++)
-            {
-                threads[s].Join();
-                g1.DrawImage(imgs[s], s * xb, 0, new Rectangle(new Point(s * xb, 0), new Size(xb, img.Height)), GraphicsUnit.Pixel);
-                imgs[s].Dispose();
-            }
-            pictureBoxAfter.Image = img;
-            log(lang.Translate("\r\n--全部任务已完成--\r\n"));
-            g1.Dispose();
-            sProducesResult = true;
-            Waiting(false);
-        }
 
 
 
@@ -516,5 +280,154 @@ namespace PicTool
 
         System.Timers.Timer hideprocessbartimer;
 
+        private void buttonGSTurn_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(TurnToGray, "Gray"));
+        }
+
+        private void buttonGSTurnIgray_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(TurnToGrayrgb2gray, "RGB2Gray"));
+        }
+
+        private void buttonGSTurnR_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(TurnToGrayR, "GrayR"));
+        }
+
+        private void buttonGSReturnR_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(BackToGrayR, "BackGrayR"));
+        }
+
+        private void buttonGSTurnRPlus_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(TurnToGrayRPlus, "GrayRPlus"));
+
+        }
+
+        private void buttonGSReturnRPlus_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(BackToGrayRPlus, "BackGrayRPlus"));
+
+        }
+
+        private void buttonGSBlack_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction((x) => TurnToBlack(x, (byte)numericUpDownGSBlack.Value), "Black"));
+        }
+
+        private void buttonContinue_Click(object sender, EventArgs e)
+        {
+            pictureBoxBefore.Image = pictureBoxAfter.Image;
+        }
+
+        private void buttonCleanA_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction((x) => CleanA(x, (byte)numericUpDownGSBlack.Value), "Black"));
+        }
+
+        private void buttonGSBlack2gray_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction((x) => TurnToBlackrgb2gray(x, (byte)numericUpDownGSBlack.Value), "RGB2Black"));
+        }
+
+        private void buttonTurnDarker_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(TurnDarker, "TurnDarker"));
+        }
+
+        private void buttonTurnLighter_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction(TurnLighter, "TurnLighter"));
+        }
+
+        private void buttonCanny_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            pictureBoxAfter.Image = CannyChange(new Bitmap(pictureBoxBefore.Image));
+            sProducesResult = true;
+        }
     }
 }

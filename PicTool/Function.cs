@@ -179,5 +179,169 @@ namespace PicTool
         {
             return Math.Pow(Math.Abs(color1.R - color2.R), 1.2) + Math.Pow(Math.Abs(color1.G - color2.G), 1.2) + Math.Pow(Math.Abs(color1.B - color2.B), 1.2);
         }
+        /// <summary>
+        /// 将颜色转换为灰度
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>灰度颜色</returns>
+        public static Color TurnToGray(Color color)
+        {
+            byte cl = (byte)(((color.R + color.G + color.B) / 3) * (color.A / 255.0));
+            return Color.FromArgb(cl, cl, cl);
+        }
+        /// <summary>
+        /// 将颜色转换为黑白(rec709)
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <param name="Threshold">阈值</param>
+        /// <returns>灰度颜色</returns>
+        public static Color TurnToBlack(Color color, byte Threshold = 128)
+        {
+            if (((color.R + color.G + color.B) / 3) * (color.A / 255.0) <= Threshold)
+                return Color.Black;
+            else
+                return Color.White;
+        }
+
+        /// <summary>
+        /// 将颜色转换为黑白
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <param name="Threshold">阈值</param>
+        /// <returns>灰度颜色</returns>
+        public static Color TurnToBlackrgb2gray(Color color, byte Threshold = 128)
+        {
+            if (((color.R * 0.2126 + color.G * 0.7152 + color.B * 0.0722) * (color.A / 255.0)) <= Threshold)
+                return Color.Black;
+            else
+                return Color.White;
+        }
+        /// <summary>
+        /// 将颜色转换为灰度值
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>灰度值</returns>
+        public static byte TurnToGrayByte(Color color) => (byte)(((color.R + color.G + color.B) / 3) * (color.A / 255.0));
+        /// <summary>
+        /// 将颜色转换为灰度 通过rgb2gray方法(rec709)
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>灰度颜色</returns>
+        public static Color TurnToGrayrgb2gray(Color color)
+        {
+            byte cl = (byte)((color.R * 0.2126 + color.G * 0.7152 + color.B * 0.0722) * (color.A / 255.0));
+            return Color.FromArgb(cl, cl, cl);
+        }
+        /// <summary>
+        /// 将颜色转换为灰度 通过R法(可还原)
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>灰度颜色</returns>
+        public static Color TurnToGrayR(Color color)
+        {
+            byte cl = (byte)(color.R / 64 * 64 + color.G / 64 * 16 + color.B / 64 * 4 + color.A / 64);
+            return Color.FromArgb(cl, cl, cl);
+        }
+        /// <summary>
+        /// 将颜色从灰度转换为彩色 通过逆R方法
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>灰度颜色</returns>
+        public static Color BackToGrayR(Color color)
+        {
+            byte r = (byte)(color.R / 64 * 64);
+            byte g = (byte)((color.R - r) / 16 * 64 + 32);
+            byte a = (byte)(color.R % 4 * 64);
+            byte b = (byte)((color.R % 64 / 4) * 64 + 32);
+            r += 32;
+            a += 32;
+            return Color.FromArgb(a, r, g, b);
+        }
+        /// <summary>
+        /// 将颜色转换为灰度 通过R法(可还原)(无透明度)
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>灰度颜色</returns>
+        public static Color TurnToGrayRPlus(Color color)
+        {
+            bool r, g, b; double tmp;
+            tmp = (color.R / 64.0);
+            tmp -= (int)tmp;
+            r = tmp < 0.5;
+            tmp = (color.G / 64.0);
+            tmp -= (int)tmp;
+            g = tmp < 0.5;
+            tmp = (color.B / 64.0);
+            tmp -= (int)tmp;
+            b = tmp < 0.5;
+            byte a = 0;
+            if (r && g && b)
+                a = 1;
+            else if (r && g)
+                a = 2;
+            else if (g && b)
+                a = 3;
+            byte cl = (byte)(color.R / 64 * 64 + color.G / 64 * 16 + color.B / 64 * 4 + a);
+            return Color.FromArgb(cl, cl, cl);
+        }
+        /// <summary>
+        /// 将颜色从灰度转换为彩色 通过逆R方法(无透明度)
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>灰度颜色</returns>
+        public static Color BackToGrayRPlus(Color color)
+        {
+            byte r = (byte)(color.R / 64 * 64);
+            byte g = (byte)((color.R - r) / 16 * 64 + 63);
+            byte a = (byte)(color.R % 4);//A在plus里面作为指示作用
+            byte b = (byte)((color.R % 64 / 4) * 64 + 63);
+            r += 63;
+            switch (a)
+            {
+                case 1://全降
+                    r -= 47;
+                    g -= 47;
+                    b -= 47;
+                    break;
+                case 2://降低rg
+                    r -= 47;
+                    g -= 47;
+                    break;
+                case 3://降低gb
+                    g -= 47;
+                    b -= 47;
+                    break;
+            }
+            return Color.FromArgb(r, g, b);
+        }
+        /// <summary>
+        /// 半透明颜色变不透明
+        /// </summary>
+        /// <param name="cl">颜色</param>
+        /// <param name="Threshold">阈值</param>
+        /// <returns></returns>
+        public static Color CleanA(Color cl, byte Threshold)
+        {
+            if (cl.A < Threshold)
+                return cl;
+            return Color.FromArgb(255, cl);
+        }
+        public static byte TurnDarkerByte(byte color) => (byte)(255 * Math.Pow((color / 255.0), 2));
+        public static byte TurnLighterByte(byte color) => (byte)(255 * Math.Sqrt((color / 255.0)));
+
+        /// <summary>
+        /// 将颜色变得更深
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>更深的颜色</returns>
+        public static Color TurnDarker(Color color) => Color.FromArgb(color.A,TurnDarkerByte(color.R), TurnDarkerByte(color.G), TurnDarkerByte(color.B));
+        /// <summary>
+        /// 将颜色变得更亮
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>更亮的颜色</returns>
+        public static Color TurnLighter(Color color) => Color.FromArgb(color.A, TurnLighterByte(color.R), TurnLighterByte(color.G), TurnLighterByte(color.B));
+
+
     }
 }
