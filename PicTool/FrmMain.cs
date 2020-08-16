@@ -380,7 +380,7 @@ namespace PicTool
             }
             Thread tuns = new Thread(Transfer);
             Waiting(true);
-            tuns.Start(new TransferFunction((x) => CleanA(x, (byte)numericUpDownGSBlack.Value), "Black"));
+            tuns.Start(new TransferFunction((x) => CleanA(x, (byte)numericUpDownGSBlack.Value), "ClearA"));
         }
 
         private void buttonGSBlack2gray_Click(object sender, EventArgs e)
@@ -428,6 +428,61 @@ namespace PicTool
             }
             pictureBoxAfter.Image = CannyChange(new Bitmap(pictureBoxBefore.Image));
             sProducesResult = true;
+        }
+
+        private void buttontextpicautocom_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            int xv = (int)(Math.Sqrt(pictureBoxBefore.Image.Width) * 10);
+            if (xv > 999)
+            {
+                MessageBox.Show(lang.Translate("无法自动推荐,图片过大,请手动指定"));
+                return;
+            }
+            numericUpDowntextpicX.Value = xv;
+            xv = (int)(pictureBoxBefore.Image.Height / Math.Sqrt(pictureBoxBefore.Image.Width) * 9.7);
+            if (xv > 999)
+            {
+                MessageBox.Show(lang.Translate("无法自动推荐,图片过大,请手动指定"));
+                return;
+            }
+            numericUpDowntextpicY.Value = xv;
+        }
+
+        private void buttonCleanCColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog cd = new ColorDialog();
+            cd.Color = buttonCleanCColor.BackColor;
+            if (cd.ShowDialog() == DialogResult.OK)
+                buttonCleanCColor.BackColor = cd.Color;
+        }
+
+        private void buttonCleanC_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction((x) => CleanC(x, buttonCleanCColor.BackColor), "CleanC"));
+        }
+
+        private void buttonCleanCdeviation_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction((x) => CleanCdeviation(x, buttonCleanCColor.BackColor,(int)numericUpDownCleanCdeviation.Value), "CleanCdeviation"));
         }
     }
 }

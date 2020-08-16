@@ -315,14 +315,15 @@ namespace PicTool
         {
             TransferFunction.Turns tf = ((TransferFunction)transferFunction).turns;
             log(lang.Translate("\r\n--正在进行图片转换操作([0])--\r\n", ((TransferFunction)transferFunction).FunctionName));
-            Bitmap img = new Bitmap(pictureBoxBefore.Image);
+            Bitmap beforimg = new Bitmap(pictureBoxBefore.Image);
+            Bitmap img = new Bitmap(beforimg.Width, beforimg.Height);
             Bitmap[] imgs = new Bitmap[7];//多线程操作
             Thread[] threads = new Thread[7];
-            int xb = img.Width / 8;
+            int xb = beforimg.Width / 8;
             for (int s = 0; s < 7; s++)
             {
                 threads[s] = new Thread(new ParameterizedThreadStart(TurnTo));
-                imgs[s] = new Bitmap(img);
+                imgs[s] = new Bitmap(beforimg);
                 threads[s].Start(new TurnData()
                 {
                     id = s,
@@ -333,11 +334,11 @@ namespace PicTool
                 });
             }
             progressBarWait.Value = 30;
-            for (int x = xb * 7; x < img.Width; x++)
+            for (int x = xb * 7; x < beforimg.Width; x++)
             {
-                for (int y = 0; y < img.Height; y++)
+                for (int y = 0; y < beforimg.Height; y++)
                 {
-                    img.SetPixel(x, y, tf(img.GetPixel(x, y)));
+                    img.SetPixel(x, y, tf(beforimg.GetPixel(x, y)));
                 }
             }
             progressBarWait.Value = 80;

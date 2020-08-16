@@ -70,8 +70,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPageColor = new System.Windows.Forms.TabPage();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.numericUpDownCleanCdeviation = new System.Windows.Forms.NumericUpDown();
+            this.buttonCleanCdeviation = new System.Windows.Forms.Button();
+            this.buttonCleanCColor = new System.Windows.Forms.Button();
+            this.buttonCleanC = new System.Windows.Forms.Button();
             this.numericUpDownTNumber = new System.Windows.Forms.NumericUpDown();
             this.buttonCleanA = new System.Windows.Forms.Button();
             this.buttonTurnLighter = new System.Windows.Forms.Button();
@@ -107,6 +109,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDowntextpicY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDowntextpicX)).BeginInit();
             this.tabPageColor.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCleanCdeviation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTNumber)).BeginInit();
             this.tabPageOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBefore)).BeginInit();
@@ -321,10 +324,10 @@
             this.tabPageGrayscale.Controls.Add(this.buttonGSTurn);
             this.tabPageGrayscale.Controls.Add(this.groupBoxGrayFunR);
             this.tabPageGrayscale.Controls.Add(this.groupBoxGSBlack);
-            this.tabPageGrayscale.Location = new System.Drawing.Point(4, 26);
+            this.tabPageGrayscale.Location = new System.Drawing.Point(4, 22);
             this.tabPageGrayscale.Name = "tabPageGrayscale";
             this.tabPageGrayscale.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageGrayscale.Size = new System.Drawing.Size(549, 168);
+            this.tabPageGrayscale.Size = new System.Drawing.Size(549, 172);
             this.tabPageGrayscale.TabIndex = 1;
             this.tabPageGrayscale.Text = "灰度";
             this.toolTip1.SetToolTip(this.tabPageGrayscale, "将图片灰度化处理");
@@ -500,10 +503,10 @@
             this.tabPageTextImg.Controls.Add(this.textBoxtextpicsmb);
             this.tabPageTextImg.Controls.Add(this.label3);
             this.tabPageTextImg.Controls.Add(this.label4);
-            this.tabPageTextImg.Location = new System.Drawing.Point(4, 26);
+            this.tabPageTextImg.Location = new System.Drawing.Point(4, 22);
             this.tabPageTextImg.Name = "tabPageTextImg";
             this.tabPageTextImg.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTextImg.Size = new System.Drawing.Size(549, 168);
+            this.tabPageTextImg.Size = new System.Drawing.Size(549, 172);
             this.tabPageTextImg.TabIndex = 4;
             this.tabPageTextImg.Text = "图片文本化";
             this.tabPageTextImg.UseVisualStyleBackColor = true;
@@ -528,6 +531,7 @@
             this.buttontextpicautocom.TabStop = false;
             this.buttontextpicautocom.Text = "自动推荐";
             this.buttontextpicautocom.UseVisualStyleBackColor = true;
+            this.buttontextpicautocom.Click += new System.EventHandler(this.buttontextpicautocom_Click);
             // 
             // numericUpDowntextpicY
             // 
@@ -577,6 +581,7 @@
             // 
             // textBoxtextpicres
             // 
+            this.textBoxtextpicres.Font = new System.Drawing.Font("宋体", 9F);
             this.textBoxtextpicres.Location = new System.Drawing.Point(3, 95);
             this.textBoxtextpicres.Multiline = true;
             this.textBoxtextpicres.Name = "textBoxtextpicres";
@@ -616,41 +621,86 @@
             // 
             // tabPageColor
             // 
-            this.tabPageColor.Controls.Add(this.button2);
-            this.tabPageColor.Controls.Add(this.button1);
+            this.tabPageColor.Controls.Add(this.numericUpDownCleanCdeviation);
+            this.tabPageColor.Controls.Add(this.buttonCleanCdeviation);
+            this.tabPageColor.Controls.Add(this.buttonCleanCColor);
+            this.tabPageColor.Controls.Add(this.buttonCleanC);
             this.tabPageColor.Controls.Add(this.numericUpDownTNumber);
             this.tabPageColor.Controls.Add(this.buttonCleanA);
             this.tabPageColor.Controls.Add(this.buttonTurnLighter);
             this.tabPageColor.Controls.Add(this.buttonTurnDarker);
-            this.tabPageColor.Location = new System.Drawing.Point(4, 22);
+            this.tabPageColor.Location = new System.Drawing.Point(4, 26);
             this.tabPageColor.Name = "tabPageColor";
             this.tabPageColor.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageColor.Size = new System.Drawing.Size(549, 172);
+            this.tabPageColor.Size = new System.Drawing.Size(549, 168);
             this.tabPageColor.TabIndex = 6;
             this.tabPageColor.Text = "颜色处理";
             this.tabPageColor.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // numericUpDownCleanCdeviation
             // 
-            this.button2.BackColor = System.Drawing.Color.Lime;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(336, 68);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 26);
-            this.button2.TabIndex = 10;
-            this.button2.TabStop = false;
-            this.button2.UseVisualStyleBackColor = false;
+            this.numericUpDownCleanCdeviation.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownCleanCdeviation.Location = new System.Drawing.Point(336, 100);
+            this.numericUpDownCleanCdeviation.Maximum = new decimal(new int[] {
+            254,
+            0,
+            0,
+            0});
+            this.numericUpDownCleanCdeviation.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownCleanCdeviation.Name = "numericUpDownCleanCdeviation";
+            this.numericUpDownCleanCdeviation.Size = new System.Drawing.Size(50, 26);
+            this.numericUpDownCleanCdeviation.TabIndex = 12;
+            this.numericUpDownCleanCdeviation.TabStop = false;
+            this.toolTip1.SetToolTip(this.numericUpDownCleanCdeviation, "在此值误差范围内的颜色都会变透明");
+            this.numericUpDownCleanCdeviation.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
             // 
-            // button1
+            // buttonCleanCdeviation
             // 
-            this.button1.Location = new System.Drawing.Point(3, 68);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(327, 26);
-            this.button1.TabIndex = 9;
-            this.button1.TabStop = false;
-            this.button1.Text = "指定颜色变透明";
-            this.toolTip1.SetToolTip(this.button1, "将指定颜色转为透明色");
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonCleanCdeviation.Location = new System.Drawing.Point(3, 100);
+            this.buttonCleanCdeviation.Name = "buttonCleanCdeviation";
+            this.buttonCleanCdeviation.Size = new System.Drawing.Size(327, 26);
+            this.buttonCleanCdeviation.TabIndex = 11;
+            this.buttonCleanCdeviation.TabStop = false;
+            this.buttonCleanCdeviation.Text = "指定颜色变透明 - 带误差";
+            this.toolTip1.SetToolTip(this.buttonCleanCdeviation, "将误差范围内的指定颜色转为透明色");
+            this.buttonCleanCdeviation.UseVisualStyleBackColor = true;
+            this.buttonCleanCdeviation.Click += new System.EventHandler(this.buttonCleanCdeviation_Click);
+            // 
+            // buttonCleanCColor
+            // 
+            this.buttonCleanCColor.BackColor = System.Drawing.Color.Lime;
+            this.buttonCleanCColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCleanCColor.Location = new System.Drawing.Point(336, 68);
+            this.buttonCleanCColor.Name = "buttonCleanCColor";
+            this.buttonCleanCColor.Size = new System.Drawing.Size(50, 26);
+            this.buttonCleanCColor.TabIndex = 10;
+            this.buttonCleanCColor.TabStop = false;
+            this.buttonCleanCColor.UseVisualStyleBackColor = false;
+            this.buttonCleanCColor.Click += new System.EventHandler(this.buttonCleanCColor_Click);
+            // 
+            // buttonCleanC
+            // 
+            this.buttonCleanC.Location = new System.Drawing.Point(3, 68);
+            this.buttonCleanC.Name = "buttonCleanC";
+            this.buttonCleanC.Size = new System.Drawing.Size(327, 26);
+            this.buttonCleanC.TabIndex = 9;
+            this.buttonCleanC.TabStop = false;
+            this.buttonCleanC.Text = "指定颜色变透明";
+            this.toolTip1.SetToolTip(this.buttonCleanC, "将指定颜色转为透明色");
+            this.buttonCleanC.UseVisualStyleBackColor = true;
+            this.buttonCleanC.Click += new System.EventHandler(this.buttonCleanC_Click);
             // 
             // numericUpDownTNumber
             // 
@@ -691,6 +741,7 @@
             this.buttonCleanA.Text = "半透明变不透明";
             this.toolTip1.SetToolTip(this.buttonCleanA, "将图片中半透明的颜色变为不透明的颜色\r\n大于或等于右边数值的半透明颜色会变为不透明");
             this.buttonCleanA.UseVisualStyleBackColor = true;
+            this.buttonCleanA.Click += new System.EventHandler(this.buttonCleanA_Click);
             // 
             // buttonTurnLighter
             // 
@@ -1003,6 +1054,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDowntextpicY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDowntextpicX)).EndInit();
             this.tabPageColor.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCleanCdeviation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTNumber)).EndInit();
             this.tabPageOther.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBefore)).EndInit();
@@ -1081,10 +1133,12 @@
         private System.Windows.Forms.TabPage tabPageColor;
         private System.Windows.Forms.Button buttonTurnDarker;
         private System.Windows.Forms.Button buttonTurnLighter;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonCleanCColor;
+        private System.Windows.Forms.Button buttonCleanC;
         private System.Windows.Forms.NumericUpDown numericUpDownTNumber;
         private System.Windows.Forms.Button buttonCleanA;
+        private System.Windows.Forms.Button buttonCleanCdeviation;
+        private System.Windows.Forms.NumericUpDown numericUpDownCleanCdeviation;
     }
 }
 

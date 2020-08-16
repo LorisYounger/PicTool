@@ -326,6 +326,31 @@ namespace PicTool
                 return cl;
             return Color.FromArgb(255, cl);
         }
+        /// <summary>
+        /// 指定颜色变透明
+        /// </summary>
+        /// <param name="cl">颜色</param>
+        /// <param name="Specify">指定的颜色</param>
+        /// <returns></returns>
+        public static Color CleanC(Color cl, Color Specify)
+        {
+            if (cl.A == Specify.A && cl.R == Specify.R && cl.G == Specify.G && cl.B == Specify.B)
+                return Color.FromArgb(0, cl);
+            return cl;
+        }
+        /// <summary>
+        /// 指定颜色变透明
+        /// </summary>
+        /// <param name="cl">颜色</param>
+        /// <param name="Specify">指定的颜色</param>
+        /// <param name="deviation">指定的颜色</param>
+        /// <returns></returns>
+        public static Color CleanCdeviation(Color cl, Color Specify, int deviation)
+        {
+            if (Math.Abs(cl.A - Specify.A) + Math.Abs(cl.R - Specify.R) + Math.Abs(cl.G - Specify.G) + Math.Abs(cl.B - Specify.B) < deviation)
+                return Color.FromArgb(0, cl);
+            return cl;
+        }
         public static byte TurnDarkerByte(byte color) => (byte)(255 * Math.Pow((color / 255.0), 2));
         public static byte TurnLighterByte(byte color) => (byte)(255 * Math.Sqrt((color / 255.0)));
 
@@ -334,7 +359,7 @@ namespace PicTool
         /// </summary>
         /// <param name="color">颜色</param>
         /// <returns>更深的颜色</returns>
-        public static Color TurnDarker(Color color) => Color.FromArgb(color.A,TurnDarkerByte(color.R), TurnDarkerByte(color.G), TurnDarkerByte(color.B));
+        public static Color TurnDarker(Color color) => Color.FromArgb(color.A, TurnDarkerByte(color.R), TurnDarkerByte(color.G), TurnDarkerByte(color.B));
         /// <summary>
         /// 将颜色变得更亮
         /// </summary>
