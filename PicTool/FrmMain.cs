@@ -52,7 +52,7 @@ namespace PicTool
             //读取软件设置
             if (new FileInfo(Application.StartupPath + @"\Setting.lpt").Exists)
             {
-                Setting = new LpsDocument(Application.StartupPath + @"\Setting.lpt");
+                Setting = new LpsDocument(File.ReadAllText(Application.StartupPath + @"\Setting.lpt"));
             }
             else
                 Setting = new LpsDocument("Setting#PicTool:|\n");
@@ -113,11 +113,12 @@ namespace PicTool
                 if (Setting.FindLine("Lang") != null)
                 {
                     string settinglang = Setting.FindLine("Lang").Info;
-                    lang = Langs.Find(x => x.Language == settinglang);
+                    lang = Langs.Find(x => x.ThreeLetterWindowsLanguageName == settinglang);
                 }
                 else
                 {
                     //尝试读取下系统语言放进去
+                    //自动识别语言用的ThreeLetterWindows见https://docs.microsoft.com/zh-cn/dotnet/api/system.globalization.cultureinfo.threeletterisolanguagename
                     lang = Langs.Find(x => x.ThreeLetterWindowsLanguageName == System.Globalization.CultureInfo.InstalledUICulture.ThreeLetterWindowsLanguageName);
                 }
                 //如果还是找不到试试给个英语,应该都会吧
@@ -127,8 +128,12 @@ namespace PicTool
                 }
             }
             if (lang == null)
-                lang = new Lang();
-            Text += " - ver " + Program.Version;
+            {
+                lang = new Lang();//还找不到就用软件自带的简体中文
+                Text += " - ver " + Program.Version;
+            }
+            else
+                Translate(lang);
             if (IsSteamUser)
                 log(lang.Translate("欢迎使用PicTool") + ',' + Steamworks.SteamClient.Name);
             else
@@ -157,25 +162,19 @@ namespace PicTool
         //    //不过我看了下,就算OverUI不起作用,正常的弹窗还是可以弹出来的,可以注释掉这个了
         //}
 
-        private void languageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Waiting(true);
-
-        }
-
+        //帮助组件
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
             switch (e.AssociatedControl.Name)
             {
-                case "pictureBoxHelp":
+                case "pictureBoxHelp"://如果是图片框,就突出显示
                     FrmHelpImage fhi = new FrmHelpImage(pictureBoxHelp.Image);
                     fhi.ShowDialog();
                     return;
             }
-
             textBoxToolTips.Text = toolTip1.GetToolTip(e.AssociatedControl);
-            if (File.Exists(Application.StartupPath + $"\\help\\{e.AssociatedControl.Name}.png"))
-                pictureBoxHelp.Image = Image.FromFile(Application.StartupPath + $"\\help\\{e.AssociatedControl.Name}.png");
+            if (e.AssociatedControl.Tag != null)
+                pictureBoxHelp.Image = Image.FromFile(Application.StartupPath + $"\\help\\{e.AssociatedControl.Tag}.png");
             else
                 pictureBoxHelp.Image = Image.FromFile(Application.StartupPath + $"\\help\\Nomal{Rnd.Next(5)}.png");
         }
@@ -266,6 +265,8 @@ namespace PicTool
             }
             Thread cmb = new Thread(CMBStart);
             Waiting(true);
+            //储存设置
+            Setting.AddorReplaceLine(new Line("textBoxCMBColor", textBoxCMBColor.Text));
             cmb.Start();
         }
 
@@ -363,6 +364,10 @@ namespace PicTool
             }
             Thread tuns = new Thread(Transfer);
             Waiting(true);
+
+            //储存设置
+            Setting.AddorReplaceLine(new Line("numericUpDownGSBlack", numericUpDownGSBlack.Value.ToString()));
+
             tuns.Start(new TransferFunction((x) => TurnToBlack(x, (byte)numericUpDownGSBlack.Value), "Black"));
         }
 
@@ -392,6 +397,10 @@ namespace PicTool
             }
             Thread tuns = new Thread(Transfer);
             Waiting(true);
+
+            //储存设置
+            Setting.AddorReplaceLine(new Line("numericUpDownGSBlack", numericUpDownGSBlack.Value.ToString()));
+
             tuns.Start(new TransferFunction((x) => TurnToBlackrgb2gray(x, (byte)numericUpDownGSBlack.Value), "RGB2Black"));
         }
 
@@ -482,7 +491,7 @@ namespace PicTool
             }
             Thread tuns = new Thread(Transfer);
             Waiting(true);
-            tuns.Start(new TransferFunction((x) => CleanCdeviation(x, buttonCleanCColor.BackColor,(int)numericUpDownCleanCdeviation.Value), "CleanCdeviation"));
+            tuns.Start(new TransferFunction((x) => CleanCdeviation(x, buttonCleanCColor.BackColor, (int)numericUpDownCleanCdeviation.Value), "CleanCdeviation"));
         }
     }
 }

@@ -65,6 +65,79 @@ namespace PicTool
             }
         }
         /// <summary>
+        /// HSB颜色值转颜色
+        /// </summary>
+        /// <param name="H">色相 0-359</param>
+        /// <param name="S">饱和度 0-100%</param>
+        /// <param name="B">亮度 0-100%</param>
+        /// <returns>颜色</returns>
+        public static Color HSBToRGB(float H, float S, float B)
+        {
+
+            float[] rgb = new float[3];
+            //先令饱和度和亮度为100%，调节色相h
+            for (int offset = 240, i = 0; i < 3; i++, offset -= 120)
+            {
+                //算出色相h的值和三个区域中心点(即0°，120°和240°)相差多少，然后根据坐标图按分段函数算出rgb。但因为色环展开后，红色区域的中心点是0°同时也是360°，不好算，索性将三个区域的中心点都向右平移到240°再计算比较方便
+                float x = Math.Abs((H + offset) % 360 - 240);
+                //如果相差小于60°则为255
+                if (x <= 60) rgb[i] = 255;
+                //如果相差在60°和120°之间，
+                else if (60 < x && x < 120) rgb[i] = ((1 - (x - 60) / 60) * 255);
+                //如果相差大于120°则为0
+                else rgb[i] = 0;
+            }
+            //在调节饱和度s
+            for (int i = 0; i < 3; i++)
+                rgb[i] += (255 - rgb[i]) * (1 - S);
+            //最后调节亮度b
+            for (int i = 0; i < 3; i++)
+                rgb[i] *= B;
+            return Color.FromArgb((int)rgb[0], (int)rgb[1], (int)rgb[2]);
+        }
+        /// <summary>
+        /// 颜色(RGB)转HSB颜色值
+        /// </summary>
+        /// <param name="color">RGB颜色</param>
+        /// <returns></returns>
+        public static float[] RGB2HSB(Color color)
+        {
+            float[] hsb = new float[3];
+            float[] rgb = new float[3] { color.R, color.G, color.B };
+            float[] rearranged = rgb.ToArray();
+            int maxIndex = 0, minIndex = 0;
+            float tmp;
+            //将rgb的值从小到大排列，存在rearranged数组里
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2 - i; j++)
+                    if (rearranged[j] > rearranged[j + 1])
+                    {
+                        tmp = rearranged[j + 1];
+                        rearranged[j + 1] = rearranged[j];
+                        rearranged[j] = tmp;
+                    }
+            }
+            //rgb的下标分别为0、1、2，maxIndex和minIndex用于存储rgb中最大最小值的下标
+            for (int i = 0; i < 3; i++)
+            {
+                if (rearranged[0] == rgb[i]) minIndex = i;
+                if (rearranged[2] == rgb[i]) maxIndex = i;
+            }
+            //算出亮度
+            hsb[2] = rearranged[2] / 255.0f;
+            //算出饱和度
+            hsb[1] = 1 - rearranged[0] / rearranged[2];
+            //算出色相
+            hsb[0] = maxIndex * 120 + 60 * (rearranged[1] / hsb[1] / rearranged[2] + (1 - 1 / hsb[1])) * ((maxIndex - minIndex + 3) % 3 == 1 ? 1 : -1);
+            //防止色相为负值
+            hsb[0] = (hsb[0] + 360) % 360;
+            return hsb;
+        }
+
+
+
+        /// <summary>
         /// 颜色转HEX值
         /// </summary>
         /// <param name="Color">颜色</param>

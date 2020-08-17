@@ -1,0 +1,107 @@
+MLS#PicTool:|lang#Traditional Chinese (繁體中文):|WIN#CHT:|
+
+请选择需要加工的图片:|請選擇需要加工的圖片
+欢迎使用PicTool:|歡迎使用PicTool
+在未来可用:|在未來可用
+请在steam界面下载此dlc:|請在steam界面下載此dlc
+无法自动推荐,图片过大,请手动指定:|
+全部可用图片(*.jpg;*.jpge;*.png;*.bmp;*.ptraw)|*.jpg;*.jpge;*.png;*.bmp;*.ptraw|全部文件(*.*)|*.*:|全部可用圖片(*.jpg;*.jpge;*.png;*.bmp;*.ptraw)|*.jpg;*.jpge;*.png;*.bmp;*.ptraw|全部文件(*. *)|*.*
+文件已损坏:|文件已損壞
+请先在加工图片后再导出:|請先在加工圖片後再導出
+便携式网络图形(*.png)|*.png|联合图像专家组(*.jpg;*.jpge)|*.jpg;*.jpge|图形交换格式(*.gif)|*.gif|纯文本源数据(*.ptraw)|*.ptraw:|便攜式網絡圖形(*.png)|*.png|聯合圖像專家組(*.jpg;*.jpge)|*.jpg;*.jpge|圖形交換格式(*.gif)|*.gif|純文本源數據(*.ptraw)|*.ptraw
+线程已经完成:|線程已經完成
+正在进行图片兼容:|正在進行圖片兼容
+请检查兼容颜色框文本框中的输入有误,请检查:|請檢查兼容顏色框文本框中的輸入有誤,請檢查
+读取图片集完成,共计[0]个颜色:|讀取圖片集完成,共計[0]個顏色
+颜色不足2个,无法进行兼容计算,任务失败:|顏色不足2個,無法進行兼容計算,任務失敗
+全部任务已完成:|全部任務已完成
+线程已经完成:|線程已經完成
+正在进行图片转换操作([0]):|正在進行圖片轉換操作([0])
+
+
+form#FrmMain:|PicTool - 一個簡單的圖片加工工具
+menu#sourcePictureToolStripMenuItem:|打開圖片
+menu#exportAsToolStripMenuItem:|導出為
+menu#exportAsPNGToolStripMenuItem:|導出為PNG
+menu#exportAsJPGToolStripMenuItem:|導出為JPG
+menu#exportToolStripMenuItem:|導出
+menu#batchProcessingToolStripMenuItem:|批處理
+menu#dlcToolStripMenuItem:|DLC - ArtBook
+menu#languageToolStripMenuItem:|語言
+.ToolTip#numericUpDownCMBTimes:|通用顏色之間的間隔/r/n數值越大間隔越大
+frm#buttonCMBUniversalColor:|生成通用顏色
+.ToolTip#buttonCMBUniversalColor:|生成通用的顏色集/r/n修改旁邊的數字決定間隔
+frm#labeltCMB:|要兼容的顏色
+frm#buttonCMBStart:|開始兼容
+.ToolTip#buttonCMBStart:|將圖片裡的所有顏色近似轉換為指定的顏色集
+.ToolTip#textBoxCMBColor:|要兼容的顏色/r/n會將圖片裡的所有顏色近似轉換為這個文本框所寫的顏色集
+frm#tabPageCompatible:|顏色兼容
+.ToolTip#tabPageCompatible:|圖片兼容是將圖片中所有轉換成指定顏色/r/n用於減少圖片中顏色數量
+frm#labeltGSBlack:|黑白閥值
+.ToolTip#labeltGSBlack:|大於或等於此數值的灰度值顏色會變為白色
+frm#buttonGSBlack2gray:|轉換成黑白 rgb2gray
+.ToolTip#buttonGSBlack2gray:|將圖片轉換成黑白圖片/r/n通過rgb2gray計算灰度值/r/n再用閥值判斷黑白
+.ToolTip#numericUpDownGSBlack:|大於或等於此數值的灰度值顏色會變為白色
+frm#buttonGSBlack:|轉換成黑白
+.ToolTip#buttonGSBlack:|將圖片轉換成黑白圖片/r/n通過平均顏色值計算灰度值/r/n再用閥值判斷黑白
+frm#buttonGSTurnIgray:|轉換成灰度 rgb2gray
+.ToolTip#buttonGSTurnIgray:|將圖片轉換成灰度圖片/r/n通過特定算法保留亮度
+frm#buttonGSTurn:|轉換成灰度
+.ToolTip#buttonGSTurn:|將圖片轉換成灰度圖片/r/n通過平均顏色值
+frm#buttonGSTurnRPlus:|轉換成灰度(無透明度)
+.ToolTip#buttonGSTurnRPlus:|將圖片轉換成可以還原顏色的灰度圖片/r/n通過不保存透明度提高顏色質量
+frm#buttonGSReturnRPlus:|還原彩色(無透明度)
+.ToolTip#buttonGSReturnRPlus:|還原通過R法(無透明度)製作出的灰度圖像顏色
+frm#buttonGSTurnR:|轉換成灰度(R法)
+.ToolTip#buttonGSTurnR:|將圖片轉換成灰度圖片/r/n可以通過'還原色彩' 還原顏色
+frm#buttonGSReturnR:|還原彩色(逆R法)
+.ToolTip#buttonGSReturnR:|還原通過R法製作出的灰度圖像顏色
+frm#groupBoxGrayFunR:|Function R
+.ToolTip#groupBoxGrayFunR:|R法生成的灰度圖像可以恢復成彩色 (顏色質量會下降)
+frm#groupBoxGSBlack:|黑白圖片
+.ToolTip#groupBoxGSBlack:|將圖片轉為只有黑色和白色2種顏色的圖片
+frm#tabPageGrayscale:|灰度
+.ToolTip#tabPageGrayscale:|將圖片灰度化處理
+frm#buttontextpicmake:|開始生成文本
+.ToolTip#buttontextpicmake:|將圖片的顏色轉換成文本
+frm#buttontextpicautocom:|自動推薦
+frm#label3:|密細區分/r/n/r/n轉換分辨率/r/n/r/n結果
+.ToolTip#label3:|通過圖片生成純文本/com使文本顯示內容和圖片相似
+frm#tabPageTextImg:|圖片文本化
+.ToolTip#numericUpDownCleanCdeviation:|在此值誤差範圍內的顏色都會變透明
+frm#buttonCleanCdeviation:|指定顏色變透明 - 帶誤差
+.ToolTip#buttonCleanCdeviation:|將誤差範圍內的指定顏色轉為透明色
+frm#buttonCleanC:|指定顏色變透明
+.ToolTip#buttonCleanC:|將指定顏色轉為透明色
+.ToolTip#numericUpDownTNumber:|大於或等於此數值的半透明顏色會變為不透明/r/n
+frm#buttonCleanA:|半透明變不透明
+.ToolTip#buttonCleanA:|將圖片中半透明的顏色變為不透明的顏色/r/n大於或等於右邊數值的半透明顏色會變為不透明
+frm#buttonTurnLighter:|變亮
+.ToolTip#buttonTurnLighter:|將圖片中顏色變亮/r/n顏色越亮越變亮/r/n並非單純的泛白
+frm#buttonTurnDarker:|加深
+.ToolTip#buttonTurnDarker:|將圖片中顏色加深/r/n顏色越深越加深/r/n並非單純的變黑
+frm#tabPageColor:|顏色處理
+frm#buttonCanny:|分析圖片輪廓
+frm#tabPageOther:|其他功能
+frm#labeltWorkshop:|敬請期待
+frm#tabPageWorkShop:|WorkShop
+.ToolTip#pictureBoxBefore:|選擇需要加工的圖片
+.ToolTip#pictureBoxAfter:|導出加工後的圖片
+frm#buttonChooseBefore:|選擇原圖片
+.ToolTip#buttonChooseBefore:|選擇需要加工的圖片
+frm#buttonExport:|導出圖片
+.ToolTip#buttonExport:|導出加工後的圖片
+frm#buttonExportjpg:|.jpg
+.ToolTip#buttonExportjpg:|導出為聯合圖像專家組(*.jpg)
+frm#buttonExportPng:|.png
+.ToolTip#buttonExportPng:|導出為便攜式網絡圖形文件(*.png)
+.ToolTip#pictureBoxHelp:|幫助圖片
+frm#textBoxConsole:|消息日誌輸出/r/n
+.ToolTip#textBoxConsole:|消息日誌輸出
+.ToolTip#pictureBoxWait:|請等待程序處理完成
+.ToolTip#buttonContinue:|將加工後重新導入加工
+frm#groupBox1:|黑白圖片
+.ToolTip#groupBox1:|只有黑色和白色2種顏色
+frm#textBoxToolTips:|鼠標懸停查看幫助/r/n懸停或點擊下方幫助圖片查看大圖
+frm#labeltBefore:|原圖片
+frm#labeltAfter:|加工後圖片

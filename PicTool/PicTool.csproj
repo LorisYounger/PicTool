@@ -65,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Canny.cs" />
+    <Compile Include="FrmColorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmColorDialog.Designer.cs">
+      <DependentUpon>FrmColorDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmHelpImage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     <Compile Include="Function.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmColorDialog.resx">
+      <DependentUpon>FrmColorDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmHelpImage.resx">
       <DependentUpon>FrmHelpImage.cs</DependentUpon>
     </EmbeddedResource>

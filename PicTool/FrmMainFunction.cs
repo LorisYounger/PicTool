@@ -32,6 +32,8 @@ namespace PicTool
         /// <param name="lang">语言</param>
         private void Translate(Lang lang)
         {
+            if (lang.Language == "NULL")
+                return;
             lang.Translate(this);
             //手动添加进行修改 例如 menu
             foreach (Line line in lang.FindLangForm(this).FindGroupLine("menu"))
@@ -41,7 +43,7 @@ namespace PicTool
                 }
             foreach (Line line in lang.FindLangForm(this).FindGroupLine(".ToolTip"))
             {
-                foreach (var tmp in this.Controls.Find(line.Info.Split('.')[0], true))
+                foreach (var tmp in Controls.Find(line.Info, true))
                 {
                     toolTip1.SetToolTip(tmp, line.Text);
                 }
@@ -62,8 +64,8 @@ namespace PicTool
         public void LangClick(object sender, EventArgs e)
         {
             ToolStripMenuItem mi = (ToolStripMenuItem)sender;
-            Setting.FindorAddLine("Lang").Info = mi.Text;
             var lang = Langs.Find(x => x.Language == mi.Text);
+            Setting.FindorAddLine("Lang").Info = lang.ThreeLetterWindowsLanguageName;
             Translate(lang);
         }
         #endregion
@@ -198,7 +200,7 @@ namespace PicTool
         /// </summary>
         private void CMBStart()
         {
-            log(lang.Translate("\r\n--正在进行图片兼容--\r\n"));
+            log("\r\n--" + lang.Translate("正在进行图片兼容") + "--\r\n");
 
 
             List<Color> Colors = new List<Color>();
@@ -214,7 +216,7 @@ namespace PicTool
                 MessageBox.Show(lang.Translate("请检查兼容颜色框文本框中的输入有误,请检查"));
             }
 
-            log(lang.Translate("读取图片集完成,共计[0]个颜色\r\n", Colors.Count.ToString()));
+            log(lang.Translate("读取图片集完成,共计[0]个颜色", Colors.Count.ToString()) + "\r\n");
 
             if (Colors.Count < 2)
             {
@@ -260,7 +262,7 @@ namespace PicTool
                 imgs[s].Dispose();
             }
             pictureBoxAfter.Image = img;
-            log(lang.Translate("\r\n--全部任务已完成--\r\n"));
+            log("\r\n--" + lang.Translate("全部任务已完成") + "--\r\n");
             g1.Dispose();
             sProducesResult = true;
             Waiting(false);
@@ -314,7 +316,7 @@ namespace PicTool
         private void Transfer(object transferFunction)
         {
             TransferFunction.Turns tf = ((TransferFunction)transferFunction).turns;
-            log(lang.Translate("\r\n--正在进行图片转换操作([0])--\r\n", ((TransferFunction)transferFunction).FunctionName));
+            log("\r\n--"+lang.Translate("正在进行图片转换操作([0])", ((TransferFunction)transferFunction).FunctionName)+ "--\r\n");
             Bitmap beforimg = new Bitmap(pictureBoxBefore.Image);
             Bitmap img = new Bitmap(beforimg.Width, beforimg.Height);
             Bitmap[] imgs = new Bitmap[7];//多线程操作
@@ -351,13 +353,13 @@ namespace PicTool
                 imgs[s].Dispose();
             }
             pictureBoxAfter.Image = img;
-            log(lang.Translate("\r\n--全部任务已完成--\r\n"));
+            log("\r\n--" + lang.Translate("全部任务已完成") + "--\r\n");
             g1.Dispose();
             sProducesResult = true;
             Waiting(false);
         }
 
-        
+
 
 
         ///外面再包一层就可以了,不需要这么麻烦
