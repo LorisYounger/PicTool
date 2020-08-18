@@ -99,6 +99,7 @@
             this.labeltBefore = new System.Windows.Forms.Label();
             this.labeltAfter = new System.Windows.Forms.Label();
             this.progressBarWait = new System.Windows.Forms.ProgressBar();
+            this.colorDialogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tabControlToolChose.SuspendLayout();
             this.tabPageCompatible.SuspendLayout();
@@ -130,6 +131,7 @@
             this.exportToolStripMenuItem,
             this.batchProcessingToolStripMenuItem,
             this.dlcToolStripMenuItem,
+            this.colorDialogToolStripMenuItem,
             this.languageToolStripMenuItem});
             resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Name = "menuStrip";
@@ -796,6 +798,12 @@
             resources.ApplyResources(this.progressBarWait, "progressBarWait");
             this.progressBarWait.Name = "progressBarWait";
             // 
+            // colorDialogToolStripMenuItem
+            // 
+            this.colorDialogToolStripMenuItem.Name = "colorDialogToolStripMenuItem";
+            resources.ApplyResources(this.colorDialogToolStripMenuItem, "colorDialogToolStripMenuItem");
+            this.colorDialogToolStripMenuItem.Click += new System.EventHandler(this.colorDialogToolStripMenuItem_Click);
+            // 
             // FrmMain
             // 
             resources.ApplyResources(this, "$this");
@@ -927,6 +935,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownCleanCdeviation;
         private System.Windows.Forms.Label labeltWorkshop;
         private System.Windows.Forms.TabPage tabPageCompatible;
+        private System.Windows.Forms.ToolStripMenuItem colorDialogToolStripMenuItem;
     }
 }
 

@@ -464,10 +464,9 @@ namespace PicTool
 
         private void buttonCleanCColor_Click(object sender, EventArgs e)
         {
-            ColorDialog cd = new ColorDialog();
-            cd.Color = buttonCleanCColor.BackColor;
+            FrmColorDialog cd = new FrmColorDialog(buttonCleanCColor.BackColor,Setting.FindorAddLine("ColorDialog"));
             if (cd.ShowDialog() == DialogResult.OK)
-                buttonCleanCColor.BackColor = cd.Color;
+                buttonCleanCColor.BackColor = cd.SelectColor;
         }
 
         private void buttonCleanC_Click(object sender, EventArgs e)
@@ -492,6 +491,12 @@ namespace PicTool
             Thread tuns = new Thread(Transfer);
             Waiting(true);
             tuns.Start(new TransferFunction((x) => CleanCdeviation(x, buttonCleanCColor.BackColor, (int)numericUpDownCleanCdeviation.Value), "CleanCdeviation"));
+        }
+
+        private void colorDialogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmColorDialog cd = new FrmColorDialog(Setting.FindorAddLine("ColorDialog"));
+            cd.ShowDialog();
         }
     }
 }

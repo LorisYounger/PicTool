@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PicTool
 {
@@ -70,8 +71,9 @@ namespace PicTool
         /// <param name="H">色相 0-359</param>
         /// <param name="S">饱和度 0-100%</param>
         /// <param name="B">亮度 0-100%</param>
+        /// <param name="alpha">透明度 0-255 可选</param>
         /// <returns>颜色</returns>
-        public static Color HSBToRGB(float H, float S, float B)
+        public static Color HSBtoRGB(float H, float S, float B, byte alpha = 255)
         {
 
             float[] rgb = new float[3];
@@ -93,14 +95,14 @@ namespace PicTool
             //最后调节亮度b
             for (int i = 0; i < 3; i++)
                 rgb[i] *= B;
-            return Color.FromArgb((int)rgb[0], (int)rgb[1], (int)rgb[2]);
+            return Color.FromArgb(alpha,(int)rgb[0], (int)rgb[1], (int)rgb[2]);
         }
         /// <summary>
         /// 颜色(RGB)转HSB颜色值
         /// </summary>
         /// <param name="color">RGB颜色</param>
         /// <returns></returns>
-        public static float[] RGB2HSB(Color color)
+        public static float[] RGBtoHSB(Color color)
         {
             float[] hsb = new float[3];
             float[] rgb = new float[3] { color.R, color.G, color.B };
@@ -124,14 +126,22 @@ namespace PicTool
                 if (rearranged[0] == rgb[i]) minIndex = i;
                 if (rearranged[2] == rgb[i]) maxIndex = i;
             }
+            if (rearranged[2] == 0)//如果是纯黑,那就直接退回纯黑
+                return new float[] { 0, 0, 0 };
             //算出亮度
             hsb[2] = rearranged[2] / 255.0f;
             //算出饱和度
             hsb[1] = 1 - rearranged[0] / rearranged[2];
+
             //算出色相
-            hsb[0] = maxIndex * 120 + 60 * (rearranged[1] / hsb[1] / rearranged[2] + (1 - 1 / hsb[1])) * ((maxIndex - minIndex + 3) % 3 == 1 ? 1 : -1);
+            if (hsb[1] == 0)//如果是灰度,H设置为默认的0
+                hsb[0] = 0;
+            else
+                hsb[0] = maxIndex * 120 + 60 * (rearranged[1] / hsb[1] / rearranged[2] + (1 - 1 / hsb[1])) * ((maxIndex - minIndex + 3) % 3 == 1 ? 1 : -1);
+
             //防止色相为负值
             hsb[0] = (hsb[0] + 360) % 360;
+            if (hsb[0] == 360) hsb[0] = 0;//防止色相=360
             return hsb;
         }
 
@@ -144,7 +154,7 @@ namespace PicTool
         /// <returns></returns>
         public static string ColorToHEX(Color Color)
         {
-            return (Color.R * 65536 + Color.G * 256 + Color.B).ToString("x").PadLeft(6, '0');
+            return (Color.R * 65536 + Color.G * 256 + Color.B).ToString("X").PadLeft(6, '0');
         }
         /// <summary>
         /// 颜色转AHEX值
@@ -153,7 +163,7 @@ namespace PicTool
         /// <returns></returns>
         public static string ColorToAHEX(Color Color)
         {
-            return (Color.A * 33554432 + Color.R * 65536 + Color.G * 256 + Color.B).ToString("x").PadLeft(8, '0');
+            return (Color.A * 16777216 + Color.R * 65536 + Color.G * 256 + Color.B).ToString("X").PadLeft(8, '0');
         }
         /// <summary>
         /// 通过Canny生成轮廓图
