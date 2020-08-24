@@ -221,7 +221,7 @@ namespace PicTool
         }
         private void LoadDIY()
         {
-            foreach(Button button in panelBG.Controls)
+            foreach (Button button in panelBG.Controls)
             {
                 button.BackColor = GetDIYColor(Convert.ToInt32(button.Tag));
             }
@@ -238,6 +238,20 @@ namespace PicTool
             Setting = setting;
             SetColor(selectColor);
             LoadDIY();
+        }
+        /// <summary>
+        /// 自定义语言文本
+        /// </summary>
+        /// <param name="BaseColor">基本颜色</param>
+        /// <param name="DIYColor">自定义颜色</param>
+        /// <param name="Yes">是</param>
+        /// <param name="No">否</param>
+        public void LanguageDIY(string BaseColor = "Base Color", string DIYColor = "DIY Color",string Yes = "OK", string No = "Cancel")
+        {
+            groupBoxBase.Text = BaseColor;
+            groupBoxDIY.Text = DIYColor;
+            buttonOK.Text = Yes;
+            buttonCancel.Text = No;
         }
         /// <summary>
         /// DIY颜色编号,不是DIY为-1
@@ -282,7 +296,7 @@ namespace PicTool
         {
             if (!enabled)
                 return;//如果不允许修改就直接返回
-            SetHSBColor((float)numericUpDownHSBH.Value, (float)numericUpDownHSBS.Value / 100, (float)numericUpDownHSBB.Value / 100, (byte)((double)numericUpDownA.Value * 2.55));
+            SetHSBColor((float)numericUpDownHSBH.Value, (float)numericUpDownHSBS.Value / 100, (float)numericUpDownHSBB.Value / 100, (byte)((double)numericUpDownA.Value * 2.55 + 0.01));
         }
         bool pictureBoxSBclick = false;
         private void pictureBoxSB_MouseDown(object sender, MouseEventArgs e)
@@ -341,7 +355,7 @@ namespace PicTool
             enabled = false;
 
             //先修改选择的颜色
-            selectcolor = Color.FromArgb((byte)((double)numericUpDownA.Value * 2.55), selectcolor);
+            selectcolor = Color.FromArgb((byte)((double)numericUpDownA.Value * 2.55 + 0.01), selectcolor);
 
             //修改调色盘
             pictureBoxSB.Image = GenerateSB((float)numericUpDownHSBH.Value, selectcolor.A);
@@ -426,7 +440,7 @@ namespace PicTool
         {
             if (!enabled)
                 return;//如果不允许修改就直接返回
-            SetColor(Color.FromArgb((byte)((double)numericUpDownA.Value * 2.55), (byte)numericUpDownRGBR.Value, (byte)numericUpDownRGBG.Value, (byte)numericUpDownRGBB.Value));
+            SetColor(Color.FromArgb((byte)((double)numericUpDownA.Value * 2.55 + 0.01), (byte)numericUpDownRGBR.Value, (byte)numericUpDownRGBG.Value, (byte)numericUpDownRGBB.Value));
         }
 
         private void buttonDIY_Click(object sender, EventArgs e)

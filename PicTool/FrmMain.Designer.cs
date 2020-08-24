@@ -39,7 +39,9 @@
             this.exportAsJPGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batchProcessingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dlcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorDialogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControlToolChose = new System.Windows.Forms.TabControl();
             this.tabPageCompatible = new System.Windows.Forms.TabPage();
             this.numericUpDownCMBTimes = new System.Windows.Forms.NumericUpDown();
@@ -70,6 +72,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPageColor = new System.Windows.Forms.TabPage();
+            this.buttonSwitchAColor = new System.Windows.Forms.Button();
+            this.buttonSwitchA = new System.Windows.Forms.Button();
             this.numericUpDownCleanCdeviation = new System.Windows.Forms.NumericUpDown();
             this.buttonCleanCdeviation = new System.Windows.Forms.Button();
             this.buttonCleanCColor = new System.Windows.Forms.Button();
@@ -99,7 +103,8 @@
             this.labeltBefore = new System.Windows.Forms.Label();
             this.labeltAfter = new System.Windows.Forms.Label();
             this.progressBarWait = new System.Windows.Forms.ProgressBar();
-            this.colorDialogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttondouble = new System.Windows.Forms.Button();
+            this.checkBoxtextpicLattice = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tabControlToolChose.SuspendLayout();
             this.tabPageCompatible.SuspendLayout();
@@ -132,7 +137,8 @@
             this.batchProcessingToolStripMenuItem,
             this.dlcToolStripMenuItem,
             this.colorDialogToolStripMenuItem,
-            this.languageToolStripMenuItem});
+            this.languageToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             resources.ApplyResources(this.menuStrip, "menuStrip");
             this.menuStrip.Name = "menuStrip";
             // 
@@ -156,6 +162,7 @@
             // 
             this.exportAsToolStripMenuItem.Name = "exportAsToolStripMenuItem";
             resources.ApplyResources(this.exportAsToolStripMenuItem, "exportAsToolStripMenuItem");
+            this.exportAsToolStripMenuItem.Click += new System.EventHandler(this.exportAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -166,11 +173,13 @@
             // 
             this.exportAsPNGToolStripMenuItem.Name = "exportAsPNGToolStripMenuItem";
             resources.ApplyResources(this.exportAsPNGToolStripMenuItem, "exportAsPNGToolStripMenuItem");
+            this.exportAsPNGToolStripMenuItem.Click += new System.EventHandler(this.exportAsPNGToolStripMenuItem_Click);
             // 
             // exportAsJPGToolStripMenuItem
             // 
             this.exportAsJPGToolStripMenuItem.Name = "exportAsJPGToolStripMenuItem";
             resources.ApplyResources(this.exportAsJPGToolStripMenuItem, "exportAsJPGToolStripMenuItem");
+            this.exportAsJPGToolStripMenuItem.Click += new System.EventHandler(this.exportAsJPGToolStripMenuItem_Click);
             // 
             // batchProcessingToolStripMenuItem
             // 
@@ -185,10 +194,22 @@
             resources.ApplyResources(this.dlcToolStripMenuItem, "dlcToolStripMenuItem");
             this.dlcToolStripMenuItem.Click += new System.EventHandler(this.dlcToolStripMenuItem_Click);
             // 
+            // colorDialogToolStripMenuItem
+            // 
+            this.colorDialogToolStripMenuItem.Name = "colorDialogToolStripMenuItem";
+            resources.ApplyResources(this.colorDialogToolStripMenuItem, "colorDialogToolStripMenuItem");
+            this.colorDialogToolStripMenuItem.Click += new System.EventHandler(this.colorDialogToolStripMenuItem_Click);
+            // 
             // languageToolStripMenuItem
             // 
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
             resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // tabControlToolChose
             // 
@@ -226,7 +247,7 @@
             0});
             resources.ApplyResources(this.numericUpDownCMBTimes, "numericUpDownCMBTimes");
             this.numericUpDownCMBTimes.Maximum = new decimal(new int[] {
-            64,
+            128,
             0,
             0,
             0});
@@ -257,6 +278,7 @@
             // 
             resources.ApplyResources(this.labeltCMB, "labeltCMB");
             this.labeltCMB.Name = "labeltCMB";
+            this.toolTip1.SetToolTip(this.labeltCMB, resources.GetString("labeltCMB.ToolTip"));
             // 
             // buttonCMBStart
             // 
@@ -417,6 +439,7 @@
             // 
             // tabPageTextImg
             // 
+            this.tabPageTextImg.Controls.Add(this.checkBoxtextpicLattice);
             this.tabPageTextImg.Controls.Add(this.buttontextpicmake);
             this.tabPageTextImg.Controls.Add(this.buttontextpicautocom);
             this.tabPageTextImg.Controls.Add(this.numericUpDowntextpicY);
@@ -437,6 +460,7 @@
             this.buttontextpicmake.TabStop = false;
             this.toolTip1.SetToolTip(this.buttontextpicmake, resources.GetString("buttontextpicmake.ToolTip"));
             this.buttontextpicmake.UseVisualStyleBackColor = true;
+            this.buttontextpicmake.Click += new System.EventHandler(this.buttontextpicmake_Click);
             // 
             // buttontextpicautocom
             // 
@@ -494,6 +518,8 @@
             this.textBoxtextpicres.Name = "textBoxtextpicres";
             this.textBoxtextpicres.ReadOnly = true;
             this.textBoxtextpicres.TabStop = false;
+            this.toolTip1.SetToolTip(this.textBoxtextpicres, resources.GetString("textBoxtextpicres.ToolTip"));
+            this.textBoxtextpicres.DoubleClick += new System.EventHandler(this.textBoxtextpicres_DoubleClick);
             // 
             // textBoxtextpicsmb
             // 
@@ -515,6 +541,8 @@
             // 
             // tabPageColor
             // 
+            this.tabPageColor.Controls.Add(this.buttonSwitchAColor);
+            this.tabPageColor.Controls.Add(this.buttonSwitchA);
             this.tabPageColor.Controls.Add(this.numericUpDownCleanCdeviation);
             this.tabPageColor.Controls.Add(this.buttonCleanCdeviation);
             this.tabPageColor.Controls.Add(this.buttonCleanCColor);
@@ -527,6 +555,24 @@
             this.tabPageColor.Name = "tabPageColor";
             this.tabPageColor.UseVisualStyleBackColor = true;
             // 
+            // buttonSwitchAColor
+            // 
+            this.buttonSwitchAColor.BackColor = System.Drawing.Color.White;
+            resources.ApplyResources(this.buttonSwitchAColor, "buttonSwitchAColor");
+            this.buttonSwitchAColor.Name = "buttonSwitchAColor";
+            this.buttonSwitchAColor.TabStop = false;
+            this.buttonSwitchAColor.UseVisualStyleBackColor = false;
+            this.buttonSwitchAColor.Click += new System.EventHandler(this.buttonSwitchAColor_Click);
+            // 
+            // buttonSwitchA
+            // 
+            resources.ApplyResources(this.buttonSwitchA, "buttonSwitchA");
+            this.buttonSwitchA.Name = "buttonSwitchA";
+            this.buttonSwitchA.TabStop = false;
+            this.toolTip1.SetToolTip(this.buttonSwitchA, resources.GetString("buttonSwitchA.ToolTip"));
+            this.buttonSwitchA.UseVisualStyleBackColor = true;
+            this.buttonSwitchA.Click += new System.EventHandler(this.buttonSwitchA_Click);
+            // 
             // numericUpDownCleanCdeviation
             // 
             this.numericUpDownCleanCdeviation.Increment = new decimal(new int[] {
@@ -536,7 +582,7 @@
             0});
             resources.ApplyResources(this.numericUpDownCleanCdeviation, "numericUpDownCleanCdeviation");
             this.numericUpDownCleanCdeviation.Maximum = new decimal(new int[] {
-            254,
+            255,
             0,
             0,
             0});
@@ -590,12 +636,7 @@
             0});
             resources.ApplyResources(this.numericUpDownTNumber, "numericUpDownTNumber");
             this.numericUpDownTNumber.Maximum = new decimal(new int[] {
-            254,
-            0,
-            0,
-            0});
-            this.numericUpDownTNumber.Minimum = new decimal(new int[] {
-            1,
+            255,
             0,
             0,
             0});
@@ -637,6 +678,7 @@
             // 
             // tabPageOther
             // 
+            this.tabPageOther.Controls.Add(this.buttondouble);
             this.tabPageOther.Controls.Add(this.buttonCanny);
             resources.ApplyResources(this.tabPageOther, "tabPageOther");
             this.tabPageOther.Name = "tabPageOther";
@@ -648,7 +690,7 @@
             this.buttonCanny.Name = "buttonCanny";
             this.buttonCanny.TabStop = false;
             this.buttonCanny.UseVisualStyleBackColor = true;
-            this.buttonCanny.Click += new System.EventHandler(this.buttonCanny_Click);
+            this.buttonCanny.Click += new System.EventHandler(this.buttonCanny_ClickAsync);
             // 
             // tabPageWorkShop
             // 
@@ -684,6 +726,7 @@
             this.pictureBoxAfter.Name = "pictureBoxAfter";
             this.pictureBoxAfter.TabStop = false;
             this.toolTip1.SetToolTip(this.pictureBoxAfter, resources.GetString("pictureBoxAfter.ToolTip"));
+            this.pictureBoxAfter.Click += new System.EventHandler(this.pictureBoxAfter_Click);
             // 
             // buttonChooseBefore
             // 
@@ -710,6 +753,7 @@
             this.buttonExportjpg.TabStop = false;
             this.toolTip1.SetToolTip(this.buttonExportjpg, resources.GetString("buttonExportjpg.ToolTip"));
             this.buttonExportjpg.UseVisualStyleBackColor = true;
+            this.buttonExportjpg.Click += new System.EventHandler(this.buttonExportjpg_Click);
             // 
             // buttonExportPng
             // 
@@ -718,6 +762,7 @@
             this.buttonExportPng.TabStop = false;
             this.toolTip1.SetToolTip(this.buttonExportPng, resources.GetString("buttonExportPng.ToolTip"));
             this.buttonExportPng.UseVisualStyleBackColor = true;
+            this.buttonExportPng.Click += new System.EventHandler(this.buttonExportPng_Click);
             // 
             // pictureBoxHelp
             // 
@@ -798,17 +843,26 @@
             resources.ApplyResources(this.progressBarWait, "progressBarWait");
             this.progressBarWait.Name = "progressBarWait";
             // 
-            // colorDialogToolStripMenuItem
+            // buttondouble
             // 
-            this.colorDialogToolStripMenuItem.Name = "colorDialogToolStripMenuItem";
-            resources.ApplyResources(this.colorDialogToolStripMenuItem, "colorDialogToolStripMenuItem");
-            this.colorDialogToolStripMenuItem.Click += new System.EventHandler(this.colorDialogToolStripMenuItem_Click);
+            resources.ApplyResources(this.buttondouble, "buttondouble");
+            this.buttondouble.Name = "buttondouble";
+            this.buttondouble.TabStop = false;
+            this.buttondouble.UseVisualStyleBackColor = true;
+            this.buttondouble.Click += new System.EventHandler(this.buttondouble_Click);
+            // 
+            // checkBoxtextpicLattice
+            // 
+            resources.ApplyResources(this.checkBoxtextpicLattice, "checkBoxtextpicLattice");
+            this.checkBoxtextpicLattice.Name = "checkBoxtextpicLattice";
+            this.toolTip1.SetToolTip(this.checkBoxtextpicLattice, resources.GetString("checkBoxtextpicLattice.ToolTip"));
+            this.checkBoxtextpicLattice.UseVisualStyleBackColor = true;
+            this.checkBoxtextpicLattice.CheckedChanged += new System.EventHandler(this.checkBoxtextpicLattice_CheckedChanged);
             // 
             // FrmMain
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.buttonContinue);
             this.Controls.Add(this.progressBarWait);
             this.Controls.Add(this.textBoxConsole);
             this.Controls.Add(this.pictureBoxWait);
@@ -824,6 +878,7 @@
             this.Controls.Add(this.pictureBoxBefore);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.buttonContinue);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip;
@@ -936,6 +991,11 @@
         private System.Windows.Forms.Label labeltWorkshop;
         private System.Windows.Forms.TabPage tabPageCompatible;
         private System.Windows.Forms.ToolStripMenuItem colorDialogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.Button buttonSwitchAColor;
+        private System.Windows.Forms.Button buttonSwitchA;
+        private System.Windows.Forms.Button buttondouble;
+        private System.Windows.Forms.CheckBox checkBoxtextpicLattice;
     }
 }
 

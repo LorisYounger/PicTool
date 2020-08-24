@@ -15,9 +15,17 @@ MLS#PicTool:|lang#Simplified Chinese (简体中文):|WIN#CHS:|
 读取图片集完成,共计[0]个颜色:|读取图片集完成,共计[0]个颜色
 颜色不足2个,无法进行兼容计算,任务失败:|颜色不足2个,无法进行兼容计算,任务失败
 全部任务已完成:|全部任务已完成
-线程已经完成:|线程已经完成
 正在进行图片转换操作([0]):|正在进行图片转换操作([0])
-
+正在进行图片文本化生成:|正在进行图片文本化生成
+基本颜色:|基本颜色
+自定义颜色:|自定义颜色
+确定:|确定
+取消:|取消
+文件已打开,大小:[0]x[1]:|文件已打开,大小:[0]x[1]
+正在尝试导出文件:|正在尝试导出文件
+正在尝试打开文件:|正在尝试打开文件
+写入失败:|写入失败
+文件成功保存:|文件成功保存
 
 form#FrmMain:|PicTool - 一个简单的图片加工工具
 menu#sourcePictureToolStripMenuItem:|打开图片
@@ -26,8 +34,10 @@ menu#exportAsPNGToolStripMenuItem:|导出为PNG
 menu#exportAsJPGToolStripMenuItem:|导出为JPG
 menu#exportToolStripMenuItem:|导出
 menu#batchProcessingToolStripMenuItem:|批处理
-menu#dlcToolStripMenuItem:|DLC - ArtBook
+menu#dlcToolStripMenuItem:|DLC - 图片集
+menu#colorDialogToolStripMenuItem:|颜色选择框
 menu#languageToolStripMenuItem:|语言
+menu#aboutToolStripMenuItem:|关于
 .ToolTip#numericUpDownCMBTimes:|通用颜色之间的间隔/r/n数值越大间隔越大
 frm#buttonCMBUniversalColor:|生成通用颜色
 .ToolTip#buttonCMBUniversalColor:|生成通用的颜色集/r/n修改旁边的数字决定间隔
@@ -84,7 +94,7 @@ frm#tabPageColor:|颜色处理
 frm#buttonCanny:|分析图片轮廓
 frm#tabPageOther:|其他功能
 frm#labeltWorkshop:|敬请期待
-frm#tabPageWorkShop:|WorkShop
+frm#tabPageWorkShop:|创意工坊
 .ToolTip#pictureBoxBefore:|选择需要加工的图片
 .ToolTip#pictureBoxAfter:|导出加工后的图片
 frm#buttonChooseBefore:|选择原图片
@@ -99,9 +109,16 @@ frm#buttonExportPng:|.png
 frm#textBoxConsole:|消息日志输出/r/n
 .ToolTip#textBoxConsole:|消息日志输出
 .ToolTip#pictureBoxWait:|请等待程序处理完成
-.ToolTip#buttonContinue:|将加工后重新导入加工
+.ToolTip#buttonContinue:|将加工的图片后重新导入
 frm#groupBox1:|黑白图片
 .ToolTip#groupBox1:|只有黑色和白色2种颜色
 frm#textBoxToolTips:|鼠标悬停查看帮助/r/n悬停或点击下方帮助图片查看大图
 frm#labeltBefore:|原图片
 frm#labeltAfter:|加工后图片
+
+form#FrmAbout:|关于
+frm#labeltAuther:|作者: 洛里斯杨远/r/n画师: 星玲
+frm#linkLabelContributor:|贡献者: 查看更多
+frm#linkLabelCopyRight:|版权: exLB.org
+
+txt#感谢: :|感谢: 

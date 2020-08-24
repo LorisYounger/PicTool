@@ -144,6 +144,13 @@
             <param name="form">要找的form</param>
             <returns>LangForm,如果没找着返回null</returns>
         </member>
+        <member name="M:MultiLang.Lang.FindLangForm(System.String)">
+            <summary>
+            获取相应的LangForm
+            </summary>
+            <param name="form">要找的form的名称</param>
+            <returns>LangForm,如果没找着返回null</returns>
+        </member>
         <member name="M:MultiLang.Lang.FindGroupLine(System.String)">
             <summary>
             查找当前翻译数据中的某一组数据

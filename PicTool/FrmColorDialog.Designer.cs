@@ -88,9 +88,8 @@
             this.buttonDIY5 = new System.Windows.Forms.Button();
             this.buttonDIY6 = new System.Windows.Forms.Button();
             this.buttonDIY7 = new System.Windows.Forms.Button();
-            this.labeltCC = new System.Windows.Forms.Label();
-            this.buttontOK = new System.Windows.Forms.Button();
-            this.buttontCancel = new System.Windows.Forms.Button();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.labeltHSB = new System.Windows.Forms.Label();
             this.labeltRGB = new System.Windows.Forms.Label();
             this.numericUpDownHSBH = new System.Windows.Forms.NumericUpDown();
@@ -747,9 +746,9 @@
             this.panelBG.Controls.Add(this.buttonDIY5);
             this.panelBG.Controls.Add(this.buttonDIY6);
             this.panelBG.Controls.Add(this.buttonDIY7);
-            this.panelBG.Location = new System.Drawing.Point(6, 25);
+            this.panelBG.Location = new System.Drawing.Point(2, 21);
             this.panelBG.Name = "panelBG";
-            this.panelBG.Size = new System.Drawing.Size(211, 56);
+            this.panelBG.Size = new System.Drawing.Size(219, 64);
             this.panelBG.TabIndex = 23;
             // 
             // buttonDIY8
@@ -757,7 +756,7 @@
             this.buttonDIY8.BackColor = System.Drawing.Color.White;
             this.buttonDIY8.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY8.Location = new System.Drawing.Point(0, 31);
+            this.buttonDIY8.Location = new System.Drawing.Point(4, 35);
             this.buttonDIY8.Name = "buttonDIY8";
             this.buttonDIY8.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY8.TabIndex = 16;
@@ -771,7 +770,7 @@
             this.buttonDIY9.BackColor = System.Drawing.Color.White;
             this.buttonDIY9.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY9.Location = new System.Drawing.Point(31, 31);
+            this.buttonDIY9.Location = new System.Drawing.Point(35, 35);
             this.buttonDIY9.Name = "buttonDIY9";
             this.buttonDIY9.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY9.TabIndex = 17;
@@ -785,7 +784,7 @@
             this.buttonDIY10.BackColor = System.Drawing.Color.White;
             this.buttonDIY10.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY10.Location = new System.Drawing.Point(62, 31);
+            this.buttonDIY10.Location = new System.Drawing.Point(66, 35);
             this.buttonDIY10.Name = "buttonDIY10";
             this.buttonDIY10.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY10.TabIndex = 18;
@@ -799,7 +798,7 @@
             this.buttonDIY11.BackColor = System.Drawing.Color.White;
             this.buttonDIY11.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY11.Location = new System.Drawing.Point(93, 31);
+            this.buttonDIY11.Location = new System.Drawing.Point(97, 35);
             this.buttonDIY11.Name = "buttonDIY11";
             this.buttonDIY11.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY11.TabIndex = 19;
@@ -813,7 +812,7 @@
             this.buttonDIY12.BackColor = System.Drawing.Color.White;
             this.buttonDIY12.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY12.Location = new System.Drawing.Point(124, 31);
+            this.buttonDIY12.Location = new System.Drawing.Point(128, 35);
             this.buttonDIY12.Name = "buttonDIY12";
             this.buttonDIY12.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY12.TabIndex = 20;
@@ -827,7 +826,7 @@
             this.buttonDIY13.BackColor = System.Drawing.Color.White;
             this.buttonDIY13.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY13.Location = new System.Drawing.Point(155, 31);
+            this.buttonDIY13.Location = new System.Drawing.Point(159, 35);
             this.buttonDIY13.Name = "buttonDIY13";
             this.buttonDIY13.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY13.TabIndex = 21;
@@ -841,7 +840,7 @@
             this.buttonDIY14.BackColor = System.Drawing.Color.White;
             this.buttonDIY14.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY14.Location = new System.Drawing.Point(186, 31);
+            this.buttonDIY14.Location = new System.Drawing.Point(190, 35);
             this.buttonDIY14.Name = "buttonDIY14";
             this.buttonDIY14.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY14.TabIndex = 22;
@@ -855,7 +854,7 @@
             this.buttonDIY1.BackColor = System.Drawing.Color.White;
             this.buttonDIY1.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY1.Location = new System.Drawing.Point(0, 0);
+            this.buttonDIY1.Location = new System.Drawing.Point(4, 4);
             this.buttonDIY1.Name = "buttonDIY1";
             this.buttonDIY1.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY1.TabIndex = 9;
@@ -869,7 +868,7 @@
             this.buttonDIY2.BackColor = System.Drawing.Color.White;
             this.buttonDIY2.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY2.Location = new System.Drawing.Point(31, 0);
+            this.buttonDIY2.Location = new System.Drawing.Point(35, 4);
             this.buttonDIY2.Name = "buttonDIY2";
             this.buttonDIY2.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY2.TabIndex = 10;
@@ -883,7 +882,7 @@
             this.buttonDIY3.BackColor = System.Drawing.Color.White;
             this.buttonDIY3.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY3.Location = new System.Drawing.Point(62, 0);
+            this.buttonDIY3.Location = new System.Drawing.Point(66, 4);
             this.buttonDIY3.Name = "buttonDIY3";
             this.buttonDIY3.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY3.TabIndex = 11;
@@ -897,7 +896,7 @@
             this.buttonDIY4.BackColor = System.Drawing.Color.White;
             this.buttonDIY4.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY4.Location = new System.Drawing.Point(93, 0);
+            this.buttonDIY4.Location = new System.Drawing.Point(97, 4);
             this.buttonDIY4.Name = "buttonDIY4";
             this.buttonDIY4.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY4.TabIndex = 12;
@@ -911,7 +910,7 @@
             this.buttonDIY5.BackColor = System.Drawing.Color.White;
             this.buttonDIY5.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY5.Location = new System.Drawing.Point(124, 0);
+            this.buttonDIY5.Location = new System.Drawing.Point(128, 4);
             this.buttonDIY5.Name = "buttonDIY5";
             this.buttonDIY5.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY5.TabIndex = 13;
@@ -925,7 +924,7 @@
             this.buttonDIY6.BackColor = System.Drawing.Color.White;
             this.buttonDIY6.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY6.Location = new System.Drawing.Point(155, 0);
+            this.buttonDIY6.Location = new System.Drawing.Point(159, 4);
             this.buttonDIY6.Name = "buttonDIY6";
             this.buttonDIY6.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY6.TabIndex = 14;
@@ -939,7 +938,7 @@
             this.buttonDIY7.BackColor = System.Drawing.Color.White;
             this.buttonDIY7.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
             this.buttonDIY7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDIY7.Location = new System.Drawing.Point(186, 0);
+            this.buttonDIY7.Location = new System.Drawing.Point(190, 4);
             this.buttonDIY7.Name = "buttonDIY7";
             this.buttonDIY7.Size = new System.Drawing.Size(25, 25);
             this.buttonDIY7.TabIndex = 15;
@@ -948,34 +947,25 @@
             this.buttonDIY7.UseVisualStyleBackColor = false;
             this.buttonDIY7.Click += new System.EventHandler(this.buttonDIY_Click);
             // 
-            // labeltCC
+            // buttonOK
             // 
-            this.labeltCC.AutoSize = true;
-            this.labeltCC.Location = new System.Drawing.Point(253, 313);
-            this.labeltCC.Name = "labeltCC";
-            this.labeltCC.Size = new System.Drawing.Size(88, 16);
-            this.labeltCC.TabIndex = 52;
-            this.labeltCC.Text = "选择的颜色";
+            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.buttonOK.Location = new System.Drawing.Point(18, 325);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(87, 31);
+            this.buttonOK.TabIndex = 53;
+            this.buttonOK.Text = "确定";
+            this.buttonOK.UseVisualStyleBackColor = true;
             // 
-            // buttontOK
+            // buttonCancel
             // 
-            this.buttontOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttontOK.Location = new System.Drawing.Point(18, 325);
-            this.buttontOK.Name = "buttontOK";
-            this.buttontOK.Size = new System.Drawing.Size(87, 31);
-            this.buttontOK.TabIndex = 53;
-            this.buttontOK.Text = "确定";
-            this.buttontOK.UseVisualStyleBackColor = true;
-            // 
-            // buttontCancel
-            // 
-            this.buttontCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttontCancel.Location = new System.Drawing.Point(142, 325);
-            this.buttontCancel.Name = "buttontCancel";
-            this.buttontCancel.Size = new System.Drawing.Size(87, 31);
-            this.buttontCancel.TabIndex = 54;
-            this.buttontCancel.Text = "取消";
-            this.buttontCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(142, 325);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(87, 31);
+            this.buttonCancel.TabIndex = 54;
+            this.buttonCancel.Text = "取消";
+            this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // labeltHSB
             // 
@@ -1095,7 +1085,7 @@
             // labeltHEX
             // 
             this.labeltHEX.AutoSize = true;
-            this.labeltHEX.Location = new System.Drawing.Point(395, 333);
+            this.labeltHEX.Location = new System.Drawing.Point(352, 333);
             this.labeltHEX.Name = "labeltHEX";
             this.labeltHEX.Size = new System.Drawing.Size(40, 16);
             this.labeltHEX.TabIndex = 63;
@@ -1103,7 +1093,7 @@
             // 
             // textBoxHEX
             // 
-            this.textBoxHEX.Location = new System.Drawing.Point(432, 330);
+            this.textBoxHEX.Location = new System.Drawing.Point(389, 330);
             this.textBoxHEX.MaxLength = 9;
             this.textBoxHEX.Name = "textBoxHEX";
             this.textBoxHEX.Size = new System.Drawing.Size(70, 26);
@@ -1145,7 +1135,7 @@
             // labeltA
             // 
             this.labeltA.AutoSize = true;
-            this.labeltA.Location = new System.Drawing.Point(308, 333);
+            this.labeltA.Location = new System.Drawing.Point(265, 333);
             this.labeltA.Name = "labeltA";
             this.labeltA.Size = new System.Drawing.Size(24, 16);
             this.labeltA.TabIndex = 67;
@@ -1159,7 +1149,7 @@
             0,
             0,
             0});
-            this.numericUpDownA.Location = new System.Drawing.Point(329, 330);
+            this.numericUpDownA.Location = new System.Drawing.Point(286, 330);
             this.numericUpDownA.Name = "numericUpDownA";
             this.numericUpDownA.Size = new System.Drawing.Size(60, 26);
             this.numericUpDownA.TabIndex = 68;
@@ -1230,9 +1220,8 @@
             this.Controls.Add(this.numericUpDownHSBH);
             this.Controls.Add(this.labeltRGB);
             this.Controls.Add(this.labeltHSB);
-            this.Controls.Add(this.buttontCancel);
-            this.Controls.Add(this.buttontOK);
-            this.Controls.Add(this.labeltCC);
+            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.groupBoxBase);
             this.Controls.Add(this.groupBoxDIY);
             this.Font = new System.Drawing.Font("宋体", 12F);
@@ -1316,9 +1305,8 @@
         private System.Windows.Forms.Button buttonDIY3;
         private System.Windows.Forms.Button buttonDIY2;
         private System.Windows.Forms.Button buttonDIY1;
-        private System.Windows.Forms.Label labeltCC;
-        private System.Windows.Forms.Button buttontOK;
-        private System.Windows.Forms.Button buttontCancel;
+        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttont52;
         private System.Windows.Forms.Button buttont53;
         private System.Windows.Forms.Button buttont54;

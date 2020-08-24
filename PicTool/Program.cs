@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,21 @@ namespace PicTool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+        Start:
+            try
+            {
+                Application.Run(new FrmMain());
+            }
+            catch (Exception e)
+            {
+                Log.AppendLine("StackTrace:" + e.StackTrace);
+                Log.AppendLine("TargetSite:" + e.TargetSite.Name);
+                Log.AppendLine("Source:" + e.Source);
+                Log.AppendLine("Message:" + e.Message);
+                if (new FrmDebug(Log.ToString()).ShowDialog() == DialogResult.Retry)
+                    goto Start;
+            }
+
 
         }
 

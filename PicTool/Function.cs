@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,7 +97,7 @@ namespace PicTool
             //最后调节亮度b
             for (int i = 0; i < 3; i++)
                 rgb[i] *= B;
-            return Color.FromArgb(alpha,(int)rgb[0], (int)rgb[1], (int)rgb[2]);
+            return Color.FromArgb(alpha, (int)rgb[0], (int)rgb[1], (int)rgb[2]);
         }
         /// <summary>
         /// 颜色(RGB)转HSB颜色值
@@ -280,7 +282,7 @@ namespace PicTool
         /// <returns>灰度颜色</returns>
         public static Color TurnToBlack(Color color, byte Threshold = 128)
         {
-            if (((color.R + color.G + color.B) / 3) * (color.A / 255.0) <= Threshold)
+            if (((color.R + color.G + color.B) / 3) * (1 - color.A / 255.0) <= Threshold)
                 return Color.Black;
             else
                 return Color.White;
@@ -300,11 +302,17 @@ namespace PicTool
                 return Color.White;
         }
         /// <summary>
-        /// 将颜色转换为灰度值
+        /// 将颜色转换为灰度值(rgb2gray)
         /// </summary>
         /// <param name="color">颜色</param>
         /// <returns>灰度值</returns>
-        public static byte TurnToGrayByte(Color color) => (byte)(((color.R + color.G + color.B) / 3) * (color.A / 255.0));
+        public static byte TurnToGrayByte(Color color) => (byte)((color.R * 0.2126 + color.G * 0.7152 + color.B * 0.0722) * (color.A / 255.0));
+        /// <summary>
+        /// 将颜色转换为黑白值(rgb2gray)
+        /// </summary>
+        /// <param name="color">颜色</param>
+        /// <returns>True白色 False黑色</returns>
+        public static bool TurnToBlackbool(Color color) => ((color.R * 0.2126 + color.G * 0.7152 + color.B * 0.0722) * (color.A / 255.0) > 127);
         /// <summary>
         /// 将颜色转换为灰度 通过rgb2gray方法(rec709)
         /// </summary>
@@ -426,12 +434,24 @@ namespace PicTool
         /// </summary>
         /// <param name="cl">颜色</param>
         /// <param name="Specify">指定的颜色</param>
-        /// <param name="deviation">指定的颜色</param>
+        /// <param name="deviation">误差</param>
         /// <returns></returns>
         public static Color CleanCdeviation(Color cl, Color Specify, int deviation)
         {
             if (Math.Abs(cl.A - Specify.A) + Math.Abs(cl.R - Specify.R) + Math.Abs(cl.G - Specify.G) + Math.Abs(cl.B - Specify.B) < deviation)
                 return Color.FromArgb(0, cl);
+            return cl;
+        }
+        /// <summary>
+        /// 透明变指定颜色
+        /// </summary>
+        /// <param name="cl">颜色</param>
+        /// <param name="Specify">指定的颜色</param>
+        /// <returns></returns>
+        public static Color SwitchA(Color cl, Color Specify)
+        {
+            if (cl.A == 0)
+                return Specify;
             return cl;
         }
         public static byte TurnDarkerByte(byte color) => (byte)(255 * Math.Pow((color / 255.0), 2));
@@ -449,7 +469,29 @@ namespace PicTool
         /// <param name="color">颜色</param>
         /// <returns>更亮的颜色</returns>
         public static Color TurnLighter(Color color) => Color.FromArgb(color.A, TurnLighterByte(color.R), TurnLighterByte(color.G), TurnLighterByte(color.B));
+        /// <summary>
+        /// 修改图片大小
+        /// </summary>
+        /// <param name="bmp">图片</param>
+        /// <param name="newW">宽</param>
+        /// <param name="newH">高</param>
+        /// <returns></returns>
+        public static Bitmap ResizeImage(Bitmap bmp, int newW, int newH)
+        {
+            Bitmap b = new Bitmap(newW, newH);
+            Graphics g = Graphics.FromImage(b);
+            // 插值算法的质量 
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.DrawImage(bmp, new Rectangle(0, 0, newW, newH), new Rectangle(0, 0, bmp.Width, bmp.Height), GraphicsUnit.Pixel);
+            g.Dispose();
+            return b;
+        }
 
-
+        /// <summary>
+        /// 从指定位置加载图片 不占用图片
+        /// </summary>
+        /// <param name="Path">图片位置</param>
+        /// <returns>图片</returns>
+        public static Bitmap ImageFromFile(string Path) => new Bitmap(new MemoryStream(File.ReadAllBytes(Path)));
     }
 }

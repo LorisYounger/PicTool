@@ -11,6 +11,7 @@ using static PicTool.Program;
 using static PicTool.Function;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PicTool
 {
@@ -137,8 +138,8 @@ namespace PicTool
             if (IsSteamUser)
                 log(lang.Translate("欢迎使用PicTool") + ',' + Steamworks.SteamClient.Name);
             else
-                log(lang.Translate("欢迎使用PicTool"));
-
+                log(lang.Translate("欢迎使用PicTool") + ',' + Environment.UserName);
+            log("");
         }
 
 
@@ -365,8 +366,8 @@ namespace PicTool
             Thread tuns = new Thread(Transfer);
             Waiting(true);
 
-            //储存设置
-            Setting.AddorReplaceLine(new Line("numericUpDownGSBlack", numericUpDownGSBlack.Value.ToString()));
+            ////储存设置 这个设置以后在打开和关闭的时候统一存一下
+            //Setting.AddorReplaceLine(new Line("numericUpDownGSBlack", numericUpDownGSBlack.Value.ToString()));
 
             tuns.Start(new TransferFunction((x) => TurnToBlack(x, (byte)numericUpDownGSBlack.Value), "Black"));
         }
@@ -428,14 +429,16 @@ namespace PicTool
             tuns.Start(new TransferFunction(TurnLighter, "TurnLighter"));
         }
 
-        private void buttonCanny_Click(object sender, EventArgs e)
+        private async void buttonCanny_ClickAsync(object sender, EventArgs e)
         {
             if (!sChooseImage)
             {
                 MessageBox.Show(lang.Translate("请选择需要加工的图片"));
                 return;
             }
-            pictureBoxAfter.Image = CannyChange(new Bitmap(pictureBoxBefore.Image));
+            Waiting(true);
+            pictureBoxAfter.Image = await Task.Run(() => CannyChange(new Bitmap(pictureBoxBefore.Image)));
+            Waiting(false);
             sProducesResult = true;
         }
 
@@ -447,16 +450,30 @@ namespace PicTool
                 return;
             }
             int xv = (int)(Math.Sqrt(pictureBoxBefore.Image.Width) * 10);
+            if (checkBoxtextpicLattice.Checked)
+                xv = xv / 2 * 2;
             if (xv > 999)
             {
                 MessageBox.Show(lang.Translate("无法自动推荐,图片过大,请手动指定"));
                 return;
             }
+            if (xv < 10)
+            {
+                MessageBox.Show(lang.Translate("无法自动推荐,图片过小"));
+                return;
+            }
             numericUpDowntextpicX.Value = xv;
             xv = (int)(pictureBoxBefore.Image.Height / Math.Sqrt(pictureBoxBefore.Image.Width) * 9.7);
+            if (checkBoxtextpicLattice.Checked)
+                xv = xv / 3 * 3;
             if (xv > 999)
             {
                 MessageBox.Show(lang.Translate("无法自动推荐,图片过大,请手动指定"));
+                return;
+            }
+            if (xv < 10)
+            {
+                MessageBox.Show(lang.Translate("无法自动推荐,图片过小"));
                 return;
             }
             numericUpDowntextpicY.Value = xv;
@@ -464,7 +481,8 @@ namespace PicTool
 
         private void buttonCleanCColor_Click(object sender, EventArgs e)
         {
-            FrmColorDialog cd = new FrmColorDialog(buttonCleanCColor.BackColor,Setting.FindorAddLine("ColorDialog"));
+            FrmColorDialog cd = new FrmColorDialog(buttonCleanCColor.BackColor, Setting.FindorAddLine("ColorDialog"));
+            cd.LanguageDIY(lang.Translate("基本颜色"), lang.Translate("自定义颜色"), lang.Translate("确定"), lang.Translate("取消"));
             if (cd.ShowDialog() == DialogResult.OK)
                 buttonCleanCColor.BackColor = cd.SelectColor;
         }
@@ -496,7 +514,147 @@ namespace PicTool
         private void colorDialogToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmColorDialog cd = new FrmColorDialog(Setting.FindorAddLine("ColorDialog"));
+            cd.LanguageDIY(lang.Translate("基本颜色"), lang.Translate("自定义颜色"), lang.Translate("确定"), lang.Translate("取消"));
             cd.ShowDialog();
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmAbout about = new FrmAbout(lang.FindLangForm("FrmAbout"));
+            about.ShowDialog();
+        }
+
+        private void exportAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveImage();
+        }
+
+        private void exportAsPNGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveImage(PictureType.Png);
+        }
+
+        private void exportAsJPGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveImage(PictureType.Jpg);
+        }
+
+        private void buttonExportjpg_Click(object sender, EventArgs e)
+        {
+            SaveImage(PictureType.Jpg);
+        }
+
+        private void buttonExportPng_Click(object sender, EventArgs e)
+        {
+            SaveImage(PictureType.Png);
+        }
+
+        private void pictureBoxAfter_Click(object sender, EventArgs e)
+        {
+            SaveImage();
+        }
+
+        private void buttonSwitchAColor_Click(object sender, EventArgs e)
+        {
+            FrmColorDialog cd = new FrmColorDialog(buttonSwitchAColor.BackColor, Setting.FindorAddLine("ColorDialog"));
+            cd.LanguageDIY(lang.Translate("基本颜色"), lang.Translate("自定义颜色"), lang.Translate("确定"), lang.Translate("取消"));
+            if (cd.ShowDialog() == DialogResult.OK)
+                buttonSwitchAColor.BackColor = cd.SelectColor;
+        }
+
+        private void buttonSwitchA_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Thread tuns = new Thread(Transfer);
+            Waiting(true);
+            tuns.Start(new TransferFunction((x) => SwitchA(x, buttonSwitchAColor.BackColor), "SwitchA"));
+        }
+        //private const string Lattice = "⠀⠠⠄⠤⠐⠰⠔⠴⠂⠢";
+        private void buttontextpicmake_Click(object sender, EventArgs e)
+        {
+            if (!sChooseImage)//以后可以设置成透明度有专属的符号啥的
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Waiting(true);
+            Thread thread;
+            if (checkBoxtextpicLattice.Checked)
+                thread = new Thread(() =>
+                {
+                    log("\r\n--" + lang.Translate("正在进行图片点阵化生成") + "--\r\n");
+                    int ix = ((int)numericUpDowntextpicX.Value) / 2 * 2;
+                    int iy = ((int)numericUpDowntextpicY.Value) / 4 * 4;
+                    StringBuilder sb = new StringBuilder();
+                    Bitmap img = ResizeImage((Bitmap)pictureBoxBefore.Image, ix, iy);
+                    progressBarWait.Maximum = iy;
+                    for (int y = 0; y < iy; y += 4)
+                    {
+                        for (int x = 0; x < ix; x += 2)
+                        {
+                            //bool[,] bs = new bool[2, 3];
+                            int ans = 0;
+                            for (int by = 0; by < 4; by++)
+                                for (int bx = 0; bx < 2; bx++)
+                                {
+                                    ans += TurnToBlackbool(img.GetPixel(x + bx, y + by)) ? 0 : 1;
+                                    ans <<= 1;
+                                }
+                            //if (ans == 0)//无论是原生空格还是盲文空格,都不能对齐
+                            //    sb.Append(' ');
+                            //else
+                                sb.Append(char.ConvertFromUtf32(10240 + (ans >> 1)));
+                        }
+                        sb.AppendLine();
+                        progressBarWait.Value = y;
+                    }
+                    log("\r\n--" + lang.Translate("全部任务已完成") + "--\r\n");
+                    Waiting(false);
+                    textBoxtextpicres.Text = sb.ToString();
+                });
+            else
+                thread = new Thread(() =>
+                {
+                    log("\r\n--" + lang.Translate("正在进行图片文本化生成") + "--\r\n");
+                    int lv = 256 / textBoxtextpicsmb.Text.Length;
+                    StringBuilder sb = new StringBuilder();
+                    Bitmap img = ResizeImage((Bitmap)pictureBoxBefore.Image, (int)numericUpDowntextpicX.Value, (int)numericUpDowntextpicY.Value);
+                    progressBarWait.Maximum = img.Height;
+                    for (int y = 0; y < img.Height; y++)
+                    {
+                        for (int x = 0; x < img.Width; x++)
+                        {
+                            //int i = TurnToBlackByte(img.GetPixel(x, y)) / lv;
+                            sb.Append(textBoxtextpicsmb.Text[TurnToGrayByte(img.GetPixel(x, y)) / lv]);
+                        }
+                        sb.AppendLine();
+                        progressBarWait.Value = y;
+                    }
+                    log("\r\n--" + lang.Translate("全部任务已完成") + "--\r\n");
+                    Waiting(false);
+                    textBoxtextpicres.Text = sb.ToString();
+                });
+            thread.Start();
+        }
+
+        private void buttondouble_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxtextpicres_DoubleClick(object sender, EventArgs e)
+        {
+            textBoxtextpicres.SelectAll();
+        }
+
+        private void checkBoxtextpicLattice_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxtextpicsmb.Enabled = !checkBoxtextpicLattice.Checked;
+        }
+
     }
 }

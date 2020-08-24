@@ -50,6 +50,7 @@
             this.ClientSize = new System.Drawing.Size(450, 300);
             this.Controls.Add(this.pictureBoxHelpImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimizeBox = false;
             this.Name = "FrmHelpImage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Help Image";
