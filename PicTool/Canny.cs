@@ -192,9 +192,9 @@ namespace PicTool
                     for (j = 0; j < bitmapData1.Width; j++)
                     {
                         // write the logic implementation here
-                        imagePointer1[0] = (byte)GreyImage[j, i];
-                        imagePointer1[1] = (byte)GreyImage[j, i];
-                        imagePointer1[2] = (byte)GreyImage[j, i];
+                        imagePointer1[0] = (byte)(255-GreyImage[j, i]);
+                        imagePointer1[1] = imagePointer1[0];
+                        imagePointer1[2] = imagePointer1[0];
                         imagePointer1[3] = (byte)255;
                         //4 bytes per pixel
                         imagePointer1 += 4;

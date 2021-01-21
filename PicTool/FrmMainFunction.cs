@@ -77,15 +77,22 @@ namespace PicTool
         /// </summary>
         private void OpenImage()
         {
+            Bitmap img = openimage();
+            if (img != null)
+                pictureBoxBefore.Image = img;
+        }
+        private Bitmap openimage()
+        {
             OpenFileDialog ofd = new OpenFileDialog()
             {
                 Filter = lang.Translate("全部可用图片(*.jpg;*.jpge;*.png;*.bmp;*.ptraw)|*.jpg;*.jpge;*.png;*.bmp;*.ptraw|全部文件(*.*)|*.*"),
             };
             if (ofd.ShowDialog() != DialogResult.OK)
             {
-                return;
+                return null;
             }
             log(lang.Translate("正在尝试打开文件") + ' ' + ofd.FileName);
+            Bitmap open = null;
             if (ofd.FileName.ToLower().EndsWith(".ptraw"))
             {
                 //PTraw 新格式
@@ -93,21 +100,23 @@ namespace PicTool
 
                 //TODO
 
-                sChooseImage = true;
-                return;
+                //sChooseImage = true;
+                //return null;
             }
-            try
-            {
-                pictureBoxBefore.Image = ImageFromFile(ofd.FileName);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(lang.Translate("文件已损坏"), e.Message);
-                log(lang.Translate("文件已损坏") + ' ' + e.Message);
-                return;
-            }
-            log(lang.Translate("文件已打开,大小:[0],[1]", pictureBoxBefore.Image.Width.ToString(), pictureBoxBefore.Image.Height.ToString()));
+            else
+                try
+                {
+                    open = ImageFromFile(ofd.FileName);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(lang.Translate("文件已损坏"), e.Message);
+                    log(lang.Translate("文件已损坏") + ' ' + e.Message);
+                    return null; ;
+                }
+            log(lang.Translate("文件已打开,大小:[0],[1]", open.Width.ToString(), open.Height.ToString()));
             sChooseImage = true;
+            return open;
         }
         /// <summary>
         /// 保存图片
@@ -428,20 +437,49 @@ namespace PicTool
             }
         }
 
-
+        /// <summary>
+        /// 转换数据
+        /// </summary>
+        private struct TurnDataMulti
+        {
+            public Bitmap img;
+            public Bitmap img2;
+            public int x;
+            public int xp;
+            public int id;
+            public TransferFunctionMulti.Turns turns;
+        }
         /// <summary>
         /// 一个包裹用于传递多图片转变方法
         /// </summary>
         private class TransferFunctionMulti : TransferFunction
         {
             public Bitmap Image2;
+            public new delegate Color Turns(Color color1, Color color2);
+            public new Turns turns;
             /// <summary>
             /// 多线程转换图片操作资源
             /// </summary>       
-            public TransferFunctionMulti(Turns ts, Bitmap image2, string name = "Transfer.Function", bool autoendwait = true, Bitmap image = null) : base(ts,name,autoendwait,image)
-            {              
+            public TransferFunctionMulti(Turns ts, Bitmap image2, string name = "Transfer.Multi.Function", bool autoendwait = true, Bitmap image = null) : base(null, name, autoendwait, image)
+            {
+                turns = ts;
                 Image2 = image2;
             }
+        }
+        /// <summary>
+        /// 转换用的多线程模块
+        /// </summary>
+        private void TurnToMulti(object otd)
+        {
+            TurnDataMulti td = (TurnDataMulti)otd;
+            for (; td.x < td.xp; td.x++)
+            {
+                for (int y = 0; y < td.img.Height; y++)
+                {
+                    td.img.SetPixel(td.x, y, td.turns(td.img.GetPixel(td.x, y), td.img2.GetPixel(td.x, y)));
+                }
+            }
+            log($"[{td.id}]" + lang.Translate("线程已经完成"));
         }
         /// <summary>
         /// 多图片加工操作
@@ -462,14 +500,15 @@ namespace PicTool
             int xb = beforimg.Width / 8;
             for (int s = 0; s < 7; s++)
             {
-                threads[s] = new Thread(new ParameterizedThreadStart(TurnTo));
+                threads[s] = new Thread(new ParameterizedThreadStart(TurnToMulti));
                 imgs[s] = new Bitmap(beforimg);
-                threads[s].Start(new TurnData()
+                threads[s].Start(new TurnDataMulti()
                 {
                     id = s,
                     x = s * xb,
                     xp = (s + 1) * xb,
                     img = imgs[s],
+                    img2 = new Bitmap(tfm.Image2),
                     turns = tfm.turns
                 });
             }
@@ -478,7 +517,7 @@ namespace PicTool
             {
                 for (int y = 0; y < beforimg.Height; y++)
                 {
-                    img.SetPixel(x, y, tfm.turns(beforimg.GetPixel(x, y)));
+                    img.SetPixel(x, y, tfm.turns(beforimg.GetPixel(x, y),tfm.Image2.GetPixel(x,y)));
                 }
             }
             progressBarWait.Value += 50;

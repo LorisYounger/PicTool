@@ -607,7 +607,7 @@ namespace PicTool
                             //if (ans == 0)//无论是原生空格还是盲文空格,都不能对齐
                             //    sb.Append(' ');
                             //else
-                                sb.Append(char.ConvertFromUtf32(10240 + (ans >> 1)));
+                            sb.Append(char.ConvertFromUtf32(10240 + (ans >> 1)));
                         }
                         sb.AppendLine();
                         progressBarWait.Value = y;
@@ -643,7 +643,24 @@ namespace PicTool
 
         private void buttondouble_Click(object sender, EventArgs e)
         {
+            if (!sChooseImage)
+            {
+                MessageBox.Show(lang.Translate("请选择需要加工的图片"));
+                return;
+            }
+            Bitmap img2 = openimage();
+            if (img2 == null)
+            {
+                MessageBox.Show(lang.Translate("请选择需要另外一张用于重叠的图片"));
+                return;
+            }
+            //如果img1和2大小不同
+            if (pictureBoxBefore.Image.Width != img2.Width || pictureBoxBefore.Image.Height != img2.Height)
+                img2 = ResizeImage(img2, pictureBoxBefore.Image.Width, pictureBoxBefore.Image.Height);
 
+            Thread tuns = new Thread(TransferMulti);
+            Waiting(true);
+            tuns.Start(new TransferFunctionMulti(DoubleColor,img2, "DoubleImage"));
         }
 
         private void textBoxtextpicres_DoubleClick(object sender, EventArgs e)

@@ -349,6 +349,25 @@ namespace PicTool
             return Color.FromArgb(a, r, g, b);
         }
         /// <summary>
+        /// 将两种颜色调成一种
+        /// </summary>
+        /// <param name="color1"></param>
+        /// <param name="color2"></param>
+        /// <returns></returns>
+        public static Color DoubleColor(Color color1, Color color2)
+        {
+            int col1 = (int)(TurnToGrayByte(color2) * 0.7 + 0.3);
+            int col2 = (int)(TurnToGrayByte(color1) * 0.3);
+            int a = 255 - col1 + col2;
+            if (a > 255)
+                a = 255;
+            int col = 255;
+            if (a != 0)
+                col = (int)((double)col2 / a);
+            return Color.FromArgb(a, col, col, col);
+        }
+
+        /// <summary>
         /// 将颜色转换为灰度 通过R法(可还原)(无透明度)
         /// </summary>
         /// <param name="color">颜色</param>

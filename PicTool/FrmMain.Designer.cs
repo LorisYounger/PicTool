@@ -63,6 +63,7 @@
             this.buttonGSReturnR = new System.Windows.Forms.Button();
             this.groupBoxGSBlack = new System.Windows.Forms.GroupBox();
             this.tabPageTextImg = new System.Windows.Forms.TabPage();
+            this.checkBoxtextpicLattice = new System.Windows.Forms.CheckBox();
             this.buttontextpicmake = new System.Windows.Forms.Button();
             this.buttontextpicautocom = new System.Windows.Forms.Button();
             this.numericUpDowntextpicY = new System.Windows.Forms.NumericUpDown();
@@ -83,6 +84,7 @@
             this.buttonTurnLighter = new System.Windows.Forms.Button();
             this.buttonTurnDarker = new System.Windows.Forms.Button();
             this.tabPageOther = new System.Windows.Forms.TabPage();
+            this.buttondouble = new System.Windows.Forms.Button();
             this.buttonCanny = new System.Windows.Forms.Button();
             this.tabPageWorkShop = new System.Windows.Forms.TabPage();
             this.labeltWorkshop = new System.Windows.Forms.Label();
@@ -103,8 +105,6 @@
             this.labeltBefore = new System.Windows.Forms.Label();
             this.labeltAfter = new System.Windows.Forms.Label();
             this.progressBarWait = new System.Windows.Forms.ProgressBar();
-            this.buttondouble = new System.Windows.Forms.Button();
-            this.checkBoxtextpicLattice = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.tabControlToolChose.SuspendLayout();
             this.tabPageCompatible.SuspendLayout();
@@ -453,6 +453,14 @@
             this.tabPageTextImg.Tag = "demo";
             this.tabPageTextImg.UseVisualStyleBackColor = true;
             // 
+            // checkBoxtextpicLattice
+            // 
+            resources.ApplyResources(this.checkBoxtextpicLattice, "checkBoxtextpicLattice");
+            this.checkBoxtextpicLattice.Name = "checkBoxtextpicLattice";
+            this.toolTip1.SetToolTip(this.checkBoxtextpicLattice, resources.GetString("checkBoxtextpicLattice.ToolTip"));
+            this.checkBoxtextpicLattice.UseVisualStyleBackColor = true;
+            this.checkBoxtextpicLattice.CheckedChanged += new System.EventHandler(this.checkBoxtextpicLattice_CheckedChanged);
+            // 
             // buttontextpicmake
             // 
             resources.ApplyResources(this.buttontextpicmake, "buttontextpicmake");
@@ -684,6 +692,14 @@
             this.tabPageOther.Name = "tabPageOther";
             this.tabPageOther.UseVisualStyleBackColor = true;
             // 
+            // buttondouble
+            // 
+            resources.ApplyResources(this.buttondouble, "buttondouble");
+            this.buttondouble.Name = "buttondouble";
+            this.buttondouble.TabStop = false;
+            this.buttondouble.UseVisualStyleBackColor = true;
+            this.buttondouble.Click += new System.EventHandler(this.buttondouble_Click);
+            // 
             // buttonCanny
             // 
             resources.ApplyResources(this.buttonCanny, "buttonCanny");
@@ -842,22 +858,6 @@
             // 
             resources.ApplyResources(this.progressBarWait, "progressBarWait");
             this.progressBarWait.Name = "progressBarWait";
-            // 
-            // buttondouble
-            // 
-            resources.ApplyResources(this.buttondouble, "buttondouble");
-            this.buttondouble.Name = "buttondouble";
-            this.buttondouble.TabStop = false;
-            this.buttondouble.UseVisualStyleBackColor = true;
-            this.buttondouble.Click += new System.EventHandler(this.buttondouble_Click);
-            // 
-            // checkBoxtextpicLattice
-            // 
-            resources.ApplyResources(this.checkBoxtextpicLattice, "checkBoxtextpicLattice");
-            this.checkBoxtextpicLattice.Name = "checkBoxtextpicLattice";
-            this.toolTip1.SetToolTip(this.checkBoxtextpicLattice, resources.GetString("checkBoxtextpicLattice.ToolTip"));
-            this.checkBoxtextpicLattice.UseVisualStyleBackColor = true;
-            this.checkBoxtextpicLattice.CheckedChanged += new System.EventHandler(this.checkBoxtextpicLattice_CheckedChanged);
             // 
             // FrmMain
             // 
