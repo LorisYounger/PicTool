@@ -2,3 +2,5 @@ ArtBook
 *.psd
 .vs/PicTool/v16/.suo
 *.cache
+PicTool/bin/Debug/Setting.lpt
+PicTool/obj/*
